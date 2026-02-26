@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Labyrinth — BIST Momentum Screener</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #080b0f;
+  --bg2:     #0d1117;
+  --bg3:     #131920;
+  --bg4:     #1a2230;
+  --border:  #1e2d3d;
+  --border2: #243444;
+  --text:    #c9d8e8;
+  --text2:   #6b8099;
+  --text3:   #3a4f62;
+  --accent:  #38bdf8;
+  --green:   #22d3a0;
+  --red:     #f43f5e;
+  --yellow:  #fbbf24;
+  --viop:    #a78bfa;
+  --viop2:   #2d1f4e;
+  --mono:    'JetBrains Mono', monospace;
+  --sans:    'Space Grotesk', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;min-height:100vh;overflow-x:hidden}
+
+/* ── HEADER ───────────────────────────────────────────────────────────── */
+.hdr{
+  position:sticky;top:0;z-index:200;
+  background:rgba(8,11,15,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:52px;
+}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-hex{
+  width:26px;height:26px;
+  background:linear-gradient(135deg,var(--accent),var(--viop));
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+}
+.logo-txt{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.14em;color:var(--text)}
+.logo-txt span{color:var(--accent)}
+.hdr-right{display:flex;align-items:center;gap:20px}
+.hdr-meta{font-family:var(--mono);font-size:10px;color:var(--text2)}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ── STAT BAR ─────────────────────────────────────────────────────────── */
+.statbar{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:stretch;overflow-x:auto;
+}
+.statbar::-webkit-scrollbar{display:none}
+.stat{
+  padding:12px 20px;border-right:1px solid var(--border);
+  flex-shrink:0;min-width:110px;
+}
+.stat-val{font-family:var(--mono);font-size:20px;font-weight:600;line-height:1;margin-bottom:3px}
+.stat-lbl{font-size:10px;color:var(--text2);letter-spacing:.05em}
+
+/* ── LAYOUT ───────────────────────────────────────────────────────────── */
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 52px - 48px)}
+
+/* ── SIDEBAR ──────────────────────────────────────────────────────────── */
+.sidebar{
+  background:var(--bg2);border-right:1px solid var(--border);
+  padding:16px 14px;overflow-y:auto;
+}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.slabel{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.18em;color:var(--text3);text-transform:uppercase;margin-bottom:8px;padding-left:2px}
+.ssec{margin-bottom:20px}
+
+.search-wrap{position:relative;margin-bottom:4px}
+.search-ico{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:13px;pointer-events:none}
+.search-inp{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:7px 8px 7px 28px;border-radius:5px;
+  font-family:var(--mono);font-size:11px;outline:none;transition:border-color .15s;
+}
+.search-inp:focus{border-color:var(--accent)}
+.search-inp::placeholder{color:var(--text3)}
+
+.fbtn-group{display:flex;gap:5px;flex-wrap:wrap}
+.fbtn{
+  background:var(--bg3);border:1px solid var(--border);color:var(--text2);
+  padding:5px 10px;border-radius:4px;font-family:var(--mono);font-size:10px;
+  font-weight:500;letter-spacing:.06em;cursor:pointer;transition:all .15s;
+}
+.fbtn:hover{border-color:var(--border2);color:var(--text)}
+.fbtn.on{background:rgba(56,189,248,.1);border-color:rgba(56,189,248,.35);color:var(--accent)}
+.fbtn.on-viop{background:var(--viop2);border-color:rgba(167,139,250,.4);color:var(--viop)}
+
+.sbtn-group{display:flex;flex-direction:column;gap:4px}
+.sbtn{
+  background:var(--bg3);border:1px solid var(--border);color:var(--text2);
+  padding:7px 10px;border-radius:4px;font-family:var(--mono);font-size:10px;
+  cursor:pointer;text-align:left;display:flex;justify-content:space-between;
+  align-items:center;transition:all .15s;
+}
+.sbtn:hover{border-color:var(--border2);color:var(--text)}
+.sbtn.on{background:rgba(56,189,248,.07);border-color:rgba(56,189,248,.3);color:var(--accent)}
+
+.ind-list{max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
+.ind-list::-webkit-scrollbar{width:2px}
+.ind-list::-webkit-scrollbar-thumb{background:var(--border2)}
+.ibtn{
+  background:none;border:none;color:var(--text2);padding:4px 6px;border-radius:3px;
+  font-size:11px;cursor:pointer;text-align:left;transition:all .1s;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.ibtn:hover{background:var(--bg3);color:var(--text)}
+.ibtn.on{background:var(--bg3);color:var(--accent);border-left:2px solid var(--accent);padding-left:8px}
+
+/* ── MAIN ─────────────────────────────────────────────────────────────── */
+.main{display:flex;flex-direction:column;overflow:hidden}
+
+.toolbar{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.view-tabs{display:flex;border:1px solid var(--border);border-radius:5px;overflow:hidden}
+.vtab{
+  background:var(--bg3);border:none;border-right:1px solid var(--border);
+  color:var(--text2);padding:6px 14px;font-family:var(--mono);font-size:10px;
+  font-weight:600;letter-spacing:.08em;cursor:pointer;transition:all .15s;
+}
+.vtab:last-child{border-right:none}
+.vtab:hover{color:var(--text)}
+.vtab.on{background:rgba(56,189,248,.1);color:var(--accent)}
+
+.dl-btn{
+  background:var(--bg3);border:1px solid var(--border);color:var(--text2);
+  padding:6px 14px;border-radius:5px;font-family:var(--mono);font-size:10px;
+  font-weight:600;letter-spacing:.08em;cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;gap:6px;
+}
+.dl-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+.rcount{font-family:var(--mono);font-size:10px;color:var(--text3)}
+
+/* ── TABLE ────────────────────────────────────────────────────────────── */
+.tbl-wrap{flex:1;overflow:auto;padding:0}
+.tbl-wrap::-webkit-scrollbar{width:5px;height:5px}
+.tbl-wrap::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--bg2);position:sticky;top:0;z-index:10}
+th{
+  padding:10px 14px;font-family:var(--mono);font-size:9px;font-weight:600;
+  letter-spacing:.12em;color:var(--text3);text-align:left;
+  border-bottom:1px solid var(--border);white-space:nowrap;
+  cursor:pointer;user-select:none;transition:color .15s;
+}
+th:hover{color:var(--text2)}
+th.sorted{color:var(--accent)}
+td{
+  padding:9px 14px;border-bottom:1px solid rgba(30,45,61,.5);
+  font-family:var(--mono);font-size:12px;white-space:nowrap;
+}
+tr:hover td{background:rgba(255,255,255,.018)}
+.tr-viop td:first-child{border-left:2px solid rgba(167,139,250,.5)}
+
+.rank-cell{font-size:10px;color:var(--text3);text-align:right;width:32px}
+.badge{padding:2px 6px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.08em}
+.badge-viop{background:var(--viop2);color:var(--viop);border:1px solid rgba(167,139,250,.3)}
+.badge-stk{background:rgba(34,211,160,.07);color:rgba(34,211,160,.6);border:1px solid rgba(34,211,160,.15)}
+.ticker-cell{font-weight:600;font-size:13px;color:var(--text)}
+.name-cell{font-family:var(--sans);font-size:11px;color:var(--text2);max-width:180px;overflow:hidden;text-overflow:ellipsis}
+.ind-cell{font-size:10px;color:var(--text3)}
+
+/* Mom + bar */
+.mom-wrap{display:flex;align-items:center;gap:8px}
+.mom-bar-bg{width:56px;height:3px;background:var(--bg4);border-radius:2px;position:relative;overflow:visible}
+.mom-bar{height:3px;border-radius:2px;position:absolute}
+
+/* Sparkline */
+.spark{display:flex;align-items:flex-end;gap:2px;height:18px}
+.spark-b{width:5px;border-radius:1px}
+
+/* Colors */
+.pos{color:var(--green)}
+.neg{color:var(--red)}
+.neu{color:var(--text2)}
+
+/* ── HEAT MAP ─────────────────────────────────────────────────────────── */
+.hm-wrap{flex:1;overflow:auto;padding:16px 18px}
+.hm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:4px}
+.hm-cell{
+  padding:9px 7px;border-radius:5px;cursor:pointer;
+  transition:transform .12s,filter .12s;position:relative;overflow:hidden;
+}
+.hm-cell:hover{transform:scale(1.05);filter:brightness(1.25)}
+.hm-ticker{font-family:var(--mono);font-size:11px;font-weight:600;color:rgba(255,255,255,.9);line-height:1;margin-bottom:3px}
+.hm-val{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.65)}
+.hm-dot{position:absolute;top:4px;right:4px;width:4px;height:4px;background:rgba(255,255,255,.5);border-radius:50%}
+
+/* ── TOOLTIP ──────────────────────────────────────────────────────────── */
+.tt{
+  position:fixed;background:var(--bg2);border:1px solid var(--border2);
+  border-radius:7px;padding:12px 15px;font-family:var(--mono);font-size:11px;
+  color:var(--text);z-index:999;pointer-events:none;opacity:0;
+  transition:opacity .12s;max-width:230px;line-height:1.7;
+  box-shadow:0 12px 32px rgba(0,0,0,.5);
+}
+.tt.show{opacity:1}
+.tt-title{font-weight:600;color:var(--accent);margin-bottom:7px;font-size:12px}
+.tt-row{display:flex;justify-content:space-between;gap:18px}
+.tt-key{color:var(--text2)}
+.tt-val{font-weight:500}
+
+/* ── RESPONSIVE ───────────────────────────────────────────────────────── */
+@media(max-width:860px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="logo">
+    <div class="logo-hex"></div>
+    <span class="logo-txt">LABYRINTH <span>MOMENTUM</span></span>
+  </div>
+  <div class="hdr-right">
+    <span class="hdr-meta"><span class="pulse"></span>Wesley R. Gray — Quantitative Momentum</span>
+    <span class="hdr-meta" id="hdr-date">—</span>
+  </div>
+</header>
+
+<!-- STAT BAR -->
+<div class="statbar">
+  <div class="stat"><div class="stat-val" id="s-total">—</div><div class="stat-lbl">Toplam Hisse</div></div>
+  <div class="stat"><div class="stat-val" style="color:var(--viop)" id="s-viop">—</div><div class="stat-lbl">VIOP</div></div>
+  <div class="stat"><div class="stat-val" style="color:var(--green)" id="s-pmom">—</div><div class="stat-lbl">↑ Momentum</div></div>
+  <div class="stat"><div class="stat-val" style="color:var(--red)"   id="s-nmom">—</div><div class="stat-lbl">↓ Momentum</div></div>
+  <div class="stat"><div class="stat-val" style="color:var(--green)" id="s-nfip">—</div><div class="stat-lbl">FIP Kaliteli (−)</div></div>
+  <div class="stat"><div class="stat-val" style="color:var(--red)"   id="s-pfip">—</div><div class="stat-lbl">FIP Düşük (+)</div></div>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="ssec">
+      <div class="slabel">Arama</div>
+      <div class="search-wrap">
+        <span class="search-ico">⌕</span>
+        <input class="search-inp" id="q" type="text" placeholder="Ticker veya şirket...">
+      </div>
+    </div>
+
+    <div class="ssec">
+      <div class="slabel">İşlem Tipi</div>
+      <div class="fbtn-group">
+        <button class="fbtn on"      data-type="ALL"  onclick="setType('ALL',this)">Tümü</button>
+        <button class="fbtn on-viop" data-type="VIOP" onclick="setType('VIOP',this)" style="background:none;border-color:var(--border);color:var(--text2)">VIOP</button>
+        <button class="fbtn"         data-type="Stock" onclick="setType('Stock',this)">Hisse</button>
+      </div>
+    </div>
+
+    <div class="ssec">
+      <div class="slabel">Sıralama</div>
+      <div class="sbtn-group">
+        <button class="sbtn on" data-k="mom"    onclick="setSort('mom',this)">12-1M Momentum <span id="arr-mom">↓</span></button>
+        <button class="sbtn"    data-k="fip"    onclick="setSort('fip',this)">Yıllık FIP <span id="arr-fip">↓</span></button>
+        <button class="sbtn"    data-k="mom_m"  onclick="setSort('mom_m',this)">Aylık Momentum <span id="arr-mom_m">↓</span></button>
+        <button class="sbtn"    data-k="fip_m"  onclick="setSort('fip_m',this)">Aylık FIP <span id="arr-fip_m">↓</span></button>
+      </div>
+    </div>
+
+    <div class="ssec">
+      <div class="slabel">Sektör</div>
+      <div class="ind-list" id="ind-list"></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="toolbar">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="view-tabs">
+          <button class="vtab on" onclick="setView('tbl',this)">≡ TABLO</button>
+          <button class="vtab"    onclick="setView('hm',this)">⊞ ISILI</button>
+        </div>
+        <span class="rcount" id="rcount">—</span>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="dl-btn" onclick="downloadCSV()">↓ CSV İndir</button>
+        <button class="dl-btn" onclick="downloadJSON()">↓ JSON İndir</button>
+      </div>
+    </div>
+
+    <div id="view-tbl" class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th style="width:32px">#</th>
+          <th>TİP</th>
+          <th onclick="setSort('ticker')">TICKER</th>
+          <th>ŞİRKET</th>
+          <th>SEKTÖR</th>
+          <th onclick="setSort('mom')" id="th-mom" class="sorted">12-1M MOM ↓</th>
+          <th onclick="setSort('fip')" id="th-fip">YIL FIP</th>
+          <th onclick="setSort('mom_m')" id="th-mom_m">AY MOM</th>
+          <th onclick="setSort('fip_m')" id="th-fip_m">AY FIP</th>
+          <th>FIP GEÇMİŞİ</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div id="view-hm" class="hm-wrap" style="display:none">
+      <div class="hm-grid" id="hm-grid"></div>
+    </div>
+  </main>
+</div>
+
+<!-- TOOLTIP -->
+<div class="tt" id="tt">
+  <div class="tt-title" id="tt-title"></div>
+  <div id="tt-body"></div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+const STOCKS = __STOCKS_JSON__;
+const META   = __META_JSON__;
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const S = {
+  type: 'ALL', industry: null, q: '', sort: 'mom', dir: -1, view: 'tbl',
+};
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+const lastM   = (s, f) => { const m = [...s.monthly].reverse().find(x => x[f] != null); return m ? m[f] : null; };
+const pct     = v => v != null ? (v >= 0 ? '+' : '') + (v * 100).toFixed(1) + '%' : '—';
+const fmtFip  = v => v != null ? (v >= 0 ? '+' : '') + v.toFixed(4) : '—';
+// FIP rengi: negatif = iyi = yeşil, pozitif = kötü = kırmızı
+const fipColor = v => v == null ? 'var(--text2)' : v < 0 ? 'var(--green)' : 'var(--red)';
+const momColor = v => v == null ? 'var(--text2)' : v > 0  ? 'var(--green)' : 'var(--red)';
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+function init() {
+  document.getElementById('s-total').textContent = META.total;
+  document.getElementById('s-viop').textContent  = META.viop;
+  document.getElementById('s-pmom').textContent  = META.pos_mom;
+  document.getElementById('s-nmom').textContent  = META.neg_mom;
+  document.getElementById('s-nfip').textContent  = META.neg_fip;
+  document.getElementById('s-pfip').textContent  = META.pos_fip;
+  document.getElementById('hdr-date').textContent = 'Son veri: ' + META.last_updated;
+
+  // Sektör listesi
+  const inds = [...new Set(STOCKS.map(s => s.industry).filter(Boolean))].sort();
+  const list = document.getElementById('ind-list');
+  const allB = document.createElement('button');
+  allB.className = 'ibtn on'; allB.textContent = '— Tümü';
+  allB.onclick = () => setInd(null, allB);
+  list.appendChild(allB);
+  inds.forEach(ind => {
+    const b = document.createElement('button');
+    b.className = 'ibtn'; b.textContent = ind;
+    b.onclick = () => setInd(ind, b);
+    list.appendChild(b);
+  });
+
+  document.getElementById('q').addEventListener('input', e => { S.q = e.target.value.toLowerCase(); render(); });
+  render();
+}
+
+// ── FILTER & SORT ─────────────────────────────────────────────────────────────
+function filtered() {
+  let d = STOCKS.slice();
+  if (S.type !== 'ALL')   d = d.filter(s => s.type === S.type);
+  if (S.industry)         d = d.filter(s => s.industry === S.industry);
+  if (S.q)                d = d.filter(s => s.ticker.toLowerCase().includes(S.q) || s.name.toLowerCase().includes(S.q));
+  d.sort((a, b) => {
+    let av, bv;
+    const N = -Infinity;
+    switch (S.sort) {
+      case 'mom':    av = a.mom    ?? N; bv = b.mom    ?? N; break;
+      case 'fip':    av = a.fip    ?? N; bv = b.fip    ?? N; break;
+      case 'mom_m':  av = lastM(a,'momentum') ?? N; bv = lastM(b,'momentum') ?? N; break;
+      case 'fip_m':  av = lastM(a,'fip') ?? N;      bv = lastM(b,'fip') ?? N;      break;
+      case 'ticker': av = a.ticker; bv = b.ticker; break;
+      default:       av = a.mom ?? N; bv = b.mom ?? N;
+    }
+    return av === bv ? 0 : (av < bv ? -1 : 1) * S.dir;
+  });
+  return d;
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render() {
+  const data = filtered();
+  document.getElementById('rcount').textContent = data.length + ' hisse';
+  if (S.view === 'tbl') renderTable(data);
+  else renderHM(data);
+}
+
+function renderTable(data) {
+  const maxMom = Math.max(...data.map(s => Math.abs(s.mom || 0)), 0.001);
+  const rows = data.map((s, i) => {
+    const lmm  = lastM(s, 'momentum');
+    const lmf  = lastM(s, 'fip');
+    const bw   = Math.abs((s.mom || 0) / maxMom) * 28;
+    const isPos = (s.mom || 0) >= 0;
+    const mc   = momColor(s.mom);
+    const fc   = fipColor(s.fip);
+    const lmmc = momColor(lmm);
+    const lmfc = fipColor(lmf);
+
+    // FIP sparkline — negatif yeşil, pozitif kırmızı
+    const spark = s.monthly.map(m => {
+      if (m.fip == null) return '';
+      const h = Math.min(Math.abs(m.fip) * 300, 16);
+      const c = m.fip < 0 ? 'var(--green)' : 'var(--red)';
+      return `<div class="spark-b" style="height:${Math.max(h,2)}px;background:${c};opacity:.75"></div>`;
+    }).join('');
+
+    const badge = s.type === 'VIOP'
+      ? '<span class="badge badge-viop">VIOP</span>'
+      : '<span class="badge badge-stk">STK</span>';
+
+    const enc = encodeURIComponent(JSON.stringify(s));
+
+    return `<tr class="${s.type==='VIOP'?'tr-viop':''}"
+               onmouseenter="showTT(event,'${enc}')" onmouseleave="hideTT()">
+      <td class="rank-cell">${i+1}</td>
+      <td>${badge}</td>
+      <td class="ticker-cell">${s.ticker}</td>
+      <td class="name-cell" title="${s.name}">${s.name}</td>
+      <td class="ind-cell">${s.industry}</td>
+      <td>
+        <div class="mom-wrap">
+          <span style="color:${mc};min-width:58px;text-align:right">${pct(s.mom)}</span>
+          <div class="mom-bar-bg">
+            <div class="mom-bar" style="left:${isPos?'50%':(50-bw)+'%'};width:${bw}%;background:${mc}"></div>
+          </div>
+        </div>
+      </td>
+      <td style="color:${fc}">${fmtFip(s.fip)}</td>
+      <td style="color:${lmmc}">${pct(lmm)}</td>
+      <td style="color:${lmfc}">${fmtFip(lmf)}</td>
+      <td><div class="spark">${spark}</div></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('tbody').innerHTML = rows || '<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text3)">Sonuç yok</td></tr>';
+}
+
+function renderHM(data) {
+  const vals = data.map(s => s.mom || 0);
+  const mx   = Math.max(...vals.map(Math.abs), 0.001);
+  const cells = data.map(s => {
+    const v   = s.mom || 0;
+    const int = Math.min(Math.abs(v) / mx, 1);
+    const bg  = v > 0
+      ? `rgba(34,211,160,${0.1 + int * 0.55})`
+      : v < 0
+        ? `rgba(244,63,94,${0.1 + int * 0.55})`
+        : 'var(--bg3)';
+    const enc = encodeURIComponent(JSON.stringify(s));
+    return `<div class="hm-cell" style="background:${bg}"
+                 onmouseenter="showTT(event,'${enc}')" onmouseleave="hideTT()">
+      ${s.type==='VIOP'?'<div class="hm-dot"></div>':''}
+      <div class="hm-ticker">${s.ticker}</div>
+      <div class="hm-val">${pct(s.mom)}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('hm-grid').innerHTML = cells;
+}
+
+// ── CONTROLS ─────────────────────────────────────────────────────────────────
+function setType(t, btn) {
+  S.type = t;
+  document.querySelectorAll('[data-type]').forEach(b => {
+    b.classList.remove('on','on-viop');
+    b.style.background = ''; b.style.borderColor = ''; b.style.color = '';
+  });
+  if (t === 'VIOP') btn.classList.add('on-viop');
+  else              btn.classList.add('on');
+  render();
+}
+
+function setSort(k, btn) {
+  if (S.sort === k) S.dir *= -1;
+  else { S.sort = k; S.dir = k === 'fip' || k === 'fip_m' ? 1 : -1; }
+  document.querySelectorAll('.sbtn').forEach(b => b.classList.remove('on'));
+  if (btn) btn.classList.add('on');
+  // ok güncelle
+  ['mom','fip','mom_m','fip_m'].forEach(key => {
+    const el = document.getElementById('arr-' + key);
+    if (el) el.textContent = S.sort === key ? (S.dir === -1 ? '↓' : '↑') : '';
+  });
+  render();
+}
+
+function setInd(ind, btn) {
+  S.industry = ind;
+  document.querySelectorAll('.ibtn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  render();
+}
+
+function setView(v, btn) {
+  S.view = v;
+  document.querySelectorAll('.vtab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('view-tbl').style.display = v === 'tbl' ? 'block' : 'none';
+  document.getElementById('view-hm').style.display  = v === 'hm'  ? 'block' : 'none';
+  render();
+}
+
+// ── DOWNLOAD ─────────────────────────────────────────────────────────────────
+function downloadCSV() {
+  const data = filtered();
+  const rows = [['Ticker','Name','Type','Industry','12-1M_Mom_%','FIP_Annual','LastMonth_Mom_%','LastMonth_FIP']];
+  data.forEach(s => {
+    const lmm = lastM(s,'momentum');
+    const lmf = lastM(s,'fip');
+    rows.push([
+      s.ticker, s.name, s.type, s.industry,
+      s.mom != null ? (s.mom * 100).toFixed(4) : '',
+      s.fip != null ? s.fip.toFixed(6) : '',
+      lmm    != null ? (lmm * 100).toFixed(4) : '',
+      lmf    != null ? lmf.toFixed(6) : '',
+    ]);
+  });
+  const csv = rows.map(r => r.join(',')).join('\n');
+  _dl('\ufeff' + csv, `labyrinth_${META.last_updated}.csv`, 'text/csv;charset=utf-8');
+}
+
+function downloadJSON() {
+  _dl(JSON.stringify({meta: META, stocks: filtered()}, null, 2),
+      `labyrinth_${META.last_updated}.json`, 'application/json');
+}
+
+function _dl(content, filename, mime) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], {type: mime}));
+  a.download = filename;
+  a.click();
+}
+
+// ── TOOLTIP ───────────────────────────────────────────────────────────────────
+function showTT(e, enc) {
+  const s   = JSON.parse(decodeURIComponent(enc));
+  const lmm = lastM(s, 'momentum');
+  const lmf = lastM(s, 'fip');
+  const lm  = s.monthly.length ? s.monthly[s.monthly.length - 1] : {};
+  document.getElementById('tt-title').textContent = `${s.ticker} — ${s.name}`;
+  document.getElementById('tt-body').innerHTML = [
+    ['12-1M Momentum', `<span style="color:${momColor(s.mom)}">${pct(s.mom)}</span>`],
+    ['Yıllık FIP',     `<span style="color:${fipColor(s.fip)}">${fmtFip(s.fip)}</span>`],
+    [`Aylık Mom (${lm.month||'—'})`, `<span style="color:${momColor(lmm)}">${pct(lmm)}</span>`],
+    [`Aylık FIP (${lm.month||'—'})`, `<span style="color:${fipColor(lmf)}">${fmtFip(lmf)}</span>`],
+    ['Sektör', s.industry || '—'],
+    ['Tip',    s.type],
+  ].map(([k,v]) => `<div class="tt-row"><span class="tt-key">${k}</span><span class="tt-val">${v}</span></div>`).join('');
+
+  const tt = document.getElementById('tt');
+  tt.style.left = Math.min(e.clientX + 14, window.innerWidth - 245) + 'px';
+  tt.style.top  = Math.min(e.clientY - 8,  window.innerHeight - 210) + 'px';
+  tt.classList.add('show');
+}
+function hideTT() { document.getElementById('tt').classList.remove('show'); }
+
+// FIP sıralaması: en negatif = en iyi → varsayılan artan sıra
+// Momentum sıralaması: en yüksek = en iyi → varsayılan azalan sıra
+// setSort zaten bunu yapıyor (fip için dir=1, mom için dir=-1)
+
+init();
+</script>
+</body>
+</html>

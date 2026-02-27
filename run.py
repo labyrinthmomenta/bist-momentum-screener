@@ -49,6 +49,8 @@ def main():
     from build_site import build
     stocks, meta = build(excel, Path(OUTPUT_DIR))
 
+    from build_site import build_strategies
+    build_strategies(stocks, Path(OUTPUT_DIR))
     log.info("=" * 50)
     log.info(f"  Son veri     : {meta['last_updated']}")
     log.info(f"  Toplam hisse : {meta['total']}")

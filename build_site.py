@@ -119,3 +119,16 @@ if __name__ == '__main__':
     excel = Path(sys.argv[1]) if len(sys.argv) > 1 else Path('Claude_Momentum_Screener_BIST_Labyrinth.xlsx')
     out   = Path(sys.argv[2]) if len(sys.argv) > 2 else Path('docs')
     build(excel, out)
+
+
+def build_strategies(stocks: list, output_dir: Path):
+    """Strateji JSON'unu ayrı dosyaya yaz."""
+    from strategies import compute_strategies
+    import json
+    result = compute_strategies(stocks)
+    data_dir = output_dir / 'data'
+    data_dir.mkdir(exist_ok=True)
+    with open(data_dir / 'strategies.json', 'w', encoding='utf-8') as f:
+        json.dump(result, f, ensure_ascii=False, separators=(',', ':'))
+    print(f"  strategies.json: VL={len(result['viop_long'])}, VS={len(result['viop_short'])}, BL={len(result['bist_long'])}")
+    return result

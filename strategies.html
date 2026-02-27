@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Labyrinth — Trade Stratejileri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080b0f;--bg2:#0d1117;--bg3:#131920;--bg4:#1a2230;
+  --border:#1e2d3d;--border2:#243444;
+  --text:#c9d8e8;--text2:#6b8099;--text3:#3a4f62;
+  --accent:#38bdf8;--green:#22d3a0;--red:#f43f5e;--yellow:#fbbf24;--orange:#fb923c;
+  --viop:#a78bfa;--viop2:#2d1f4e;
+  --mono:'JetBrains Mono',monospace;--sans:'Space Grotesk',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;min-height:100vh}
+
+/* ── HEADER ─── */
+.hdr{position:sticky;top:0;z-index:100;background:rgba(8,11,15,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 24px;height:52px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-hex{width:26px;height:26px;background:linear-gradient(135deg,var(--accent),var(--viop));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);flex-shrink:0}
+.logo-txt{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.14em;color:var(--text)}
+.logo-txt span{color:var(--accent)}
+.nav{display:flex;gap:3px;margin-left:4px}
+.nav a{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--text2);text-decoration:none;padding:6px 13px;border-radius:4px;border:1px solid transparent;transition:all .15s}
+.nav a:hover{color:var(--text);border-color:var(--border)}
+.nav a.active{color:var(--accent);border-color:rgba(56,189,248,.3);background:rgba(56,189,248,.07)}
+.hdr-right{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--text2);display:flex;align-items:center;gap:14px}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* ── TIMING BANNER ─── */
+.timing-banner{
+  border-bottom:1px solid var(--border);
+  padding:10px 24px;display:flex;align-items:center;gap:20px;
+  font-family:var(--mono);font-size:11px;flex-wrap:wrap;
+}
+.timing-update{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(34,211,160,.07);border:1px solid rgba(34,211,160,.2);
+  border-radius:5px;padding:6px 12px;
+}
+.timing-update.today{
+  background:rgba(56,189,248,.1);border-color:rgba(56,189,248,.35);
+  animation:glow 2s infinite;
+}
+@keyframes glow{0%,100%{box-shadow:0 0 0 rgba(56,189,248,0)}50%{box-shadow:0 0 12px rgba(56,189,248,.15)}}
+.timing-next{display:flex;align-items:center;gap:8px;color:var(--text2)}
+.countdown{
+  background:var(--bg3);border:1px solid var(--border);border-radius:4px;
+  padding:3px 8px;color:var(--yellow);font-weight:600;font-size:11px;
+}
+.countdown.soon{color:var(--orange)}
+.timing-freq{color:var(--text3);font-size:10px}
+
+/* ── PAGE ─── */
+.page{max-width:1380px;margin:0 auto;padding:24px}
+
+/* ── METODOLOJİ ─── */
+.method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.method-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:15px 17px}
+.method-num{font-family:var(--mono);font-size:22px;font-weight:700;opacity:.25;margin-bottom:5px}
+.method-title{font-size:13px;font-weight:700;margin-bottom:7px}
+.method-body{font-size:11px;color:var(--text2);line-height:1.75}
+.method-body code{font-family:var(--mono);color:var(--accent);font-size:10px;background:rgba(56,189,248,.07);padding:1px 4px;border-radius:3px}
+
+/* ── STRATEJİ SECTION ─── */
+.str-sec{margin-bottom:36px}
+.str-hdr{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:9px;border:1px solid;margin-bottom:12px}
+.str-icon{width:36px;height:36px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;font-weight:700}
+.str-title{font-size:15px;font-weight:700;margin-bottom:2px}
+.str-desc{font-size:11px;color:var(--text2);line-height:1.5}
+.str-cnt{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--text2);white-space:nowrap}
+
+.s-long  .str-hdr{background:rgba(34,211,160,.045);border-color:rgba(34,211,160,.18)}
+.s-long  .str-icon{background:rgba(34,211,160,.12)}
+.s-long  .str-title{color:var(--green)}
+.s-short .str-hdr{background:rgba(244,63,94,.045);border-color:rgba(244,63,94,.18)}
+.s-short .str-icon{background:rgba(244,63,94,.12)}
+.s-short .str-title{color:var(--red)}
+.s-spot  .str-hdr{background:rgba(56,189,248,.045);border-color:rgba(56,189,248,.18)}
+.s-spot  .str-icon{background:rgba(56,189,248,.12)}
+.s-spot  .str-title{color:var(--accent)}
+
+/* ── UYARI KUTUSU ─── */
+.warn-box{background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:6px;padding:11px 14px;margin-bottom:12px;font-size:11px;color:var(--yellow);line-height:1.65}
+.warn-box b{display:block;margin-bottom:2px;font-size:11px}
+
+/* ── TABLO ─── */
+.tbl-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--bg3)}
+th{padding:8px 12px;font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.13em;color:var(--text3);text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;cursor:default}
+th.r{text-align:right}
+td{padding:8px 12px;border-bottom:1px solid rgba(30,45,61,.45);font-family:var(--mono);font-size:11.5px;white-space:nowrap;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.015)}
+.rank-c{font-size:10px;color:var(--text3);width:26px;text-align:right}
+.ticker-c{font-weight:700;font-size:13px}
+.name-c{font-family:var(--sans);font-size:11px;color:var(--text2);max-width:185px;overflow:hidden;text-overflow:ellipsis}
+.ind-c{font-size:10px;color:var(--text3);max-width:140px;overflow:hidden;text-overflow:ellipsis}
+.r{text-align:right}
+
+/* Delta */
+.delta{font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:2px}
+
+/* Sinyal pill'leri */
+.sig-list{display:flex;flex-wrap:wrap;gap:3px}
+.sig{font-family:var(--sans);font-size:9px;padding:2px 6px;border-radius:3px;border:1px solid;white-space:nowrap}
+.sig-g{background:rgba(34,211,160,.07);color:rgba(34,211,160,.85);border-color:rgba(34,211,160,.2)}
+.sig-r{background:rgba(244,63,94,.07);color:rgba(244,63,94,.85);border-color:rgba(244,63,94,.2)}
+.sig-y{background:rgba(251,191,36,.07);color:var(--yellow);border-color:rgba(251,191,36,.2)}
+.sig-b{background:rgba(56,189,248,.07);color:rgba(56,189,248,.85);border-color:rgba(56,189,248,.2)}
+.sig-n{background:var(--bg3);color:var(--text3);border-color:var(--border)}
+
+/* Badge'ler */
+.badge{padding:2px 6px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.07em}
+.risk-N{background:rgba(34,211,160,.1);color:var(--green);border:1px solid rgba(34,211,160,.25)}
+.risk-O{background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.25)}
+.risk-Y{background:rgba(244,63,94,.1);color:var(--red);border:1px solid rgba(244,63,94,.25)}
+.ql-S{background:rgba(167,139,250,.15);color:var(--viop);border:1px solid rgba(167,139,250,.3)}
+.ql-A{background:rgba(56,189,248,.1);color:var(--accent);border:1px solid rgba(56,189,248,.25)}
+.ql-B{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
+.tr-S{background:rgba(34,211,160,.06);border:1px solid rgba(34,211,160,.2)}
+.tr-D{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2)}
+
+/* Skor bar */
+.sc-bar{display:flex;align-items:center;gap:6px}
+.sc-bg{width:52px;height:3px;background:var(--bg4);border-radius:2px;position:relative}
+.sc-fill{height:3px;border-radius:2px;position:absolute;left:0;top:0}
+
+/* Skeleton */
+.skel{background:var(--bg3);border-radius:6px;height:80px;animation:pulse-skel 1.5s infinite}
+@keyframes pulse-skel{0%,100%{opacity:.3}50%{opacity:.7}}
+.empty{text-align:center;padding:40px;color:var(--text3);font-family:var(--mono);font-size:11px}
+
+@media(max-width:900px){.method-grid{grid-template-columns:1fr}.hdr{gap:10px}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <a class="logo" href="index.html">
+    <div class="logo-hex"></div>
+    <span class="logo-txt">LABYRINTH <span>MOMENTUM</span></span>
+  </a>
+  <nav class="nav">
+    <a href="index.html">← Screener</a>
+    <a href="strategies.html" class="active">⚡ Stratejiler</a>
+  </nav>
+  <div class="hdr-right">
+    <span><span class="pulse"></span><span id="hdr-date">—</span></span>
+  </div>
+</header>
+
+<!-- TIMING BANNER -->
+<div class="timing-banner" id="timing-banner">
+  <div class="timing-update" id="timing-update">
+    <span id="timing-update-icon">⟳</span>
+    <span id="timing-update-text">Yükleniyor...</span>
+  </div>
+  <div class="timing-next" id="timing-next-wrap">
+    <span id="timing-next-text">—</span>
+    <span class="countdown" id="countdown">—</span>
+  </div>
+  <span class="timing-freq" id="timing-freq">Her Cuma kapanış sonrası güncellenir</span>
+</div>
+
+<div class="page">
+
+  <!-- METODOLOJİ -->
+  <div class="method-grid">
+    <div class="method-card">
+      <div class="method-num" style="color:var(--green)">01</div>
+      <div class="method-title" style="color:var(--green)">VIOP Long</div>
+      <div class="method-body">
+        Güçlenen aylık momentum + FIP iyileşmesi.<br><br>
+        <code>ΔMom = Mom(t) − Mom(t−1)</code> → pozitif = ivme artıyor<br>
+        <code>ΔFIP = FIP(t) − FIP(t−1)</code> → negatif = kalite artıyor<br><br>
+        Her iki delta da lehte ise güçlü long sinyali.
+        12-1M negatif olan hisseler yüksek risk olarak işaretlenir.
+      </div>
+    </div>
+    <div class="method-card">
+      <div class="method-num" style="color:var(--red)">02</div>
+      <div class="method-title" style="color:var(--red)">VIOP Short</div>
+      <div class="method-body">
+        Zayıflayan momentum + kötüleşen ivme.<br><br>
+        <code>ΔMom < 0</code>: momentum hızlanarak düşüyor<br>
+        <code>ΔFIP > 0</code>: kalite bozuluyor (spiky'leşiyor)<br><br>
+        Yalnızca 12-1M negatif hisseler gösterilir. Güçlü yukarı trendlerde
+        short pozisyon listelenmez. Kısa vadeli (1-4 hafta) kullanım için.
+      </div>
+    </div>
+    <div class="method-card">
+      <div class="method-num" style="color:var(--accent)">03</div>
+      <div class="method-title" style="color:var(--accent)">BIST Spot Long</div>
+      <div class="method-body">
+        Gray metodolojisi: yüksek 12-1M + negatif FIP = en kaliteli momentum.<br><br>
+        <code>S-Tier</code>: 12-1M > %50, FIP < −0.10, 3 ay pozitif<br>
+        <code>A-Tier</code>: 12-1M > %20, FIP < −0.05, 2 ay pozitif<br><br>
+        6-12 aylık elde tutma için tasarlanmış. Her Cuma güncellenir —
+        ayın sonunu beklemeden giriş yapılabilir.
+      </div>
+    </div>
+  </div>
+
+  <!-- STRATEJİ 1: VIOP LONG -->
+  <div class="str-sec s-long">
+    <div class="str-hdr">
+      <div class="str-icon">▲</div>
+      <div>
+        <div class="str-title">VIOP Long — Güçlenen Momentum</div>
+        <div class="str-desc">ΔMom pozitif ve ΔFIP negatif olan VIOP hisseleri. Cari ay momentumu pozitif olmak zorunda. Risk: 12-1M negatif hisseler yüksek risk olarak işaretlenir.</div>
+      </div>
+      <span class="str-cnt" id="vl-cnt">—</span>
+    </div>
+    <div id="vl-tbl"><div class="skel"></div></div>
+  </div>
+
+  <!-- STRATEJİ 2: VIOP SHORT -->
+  <div class="str-sec s-short">
+    <div class="str-hdr">
+      <div class="str-icon">▼</div>
+      <div>
+        <div class="str-title">VIOP Short — Zayıflayan Momentum</div>
+        <div class="str-desc">ΔMom negatif ve cari ay negatif olan VIOP hisseleri. Yalnızca 12-1M trendiyle uyumlu short'lar gösterilir. Güçlü yukarı trendler otomatik filtrelenir.</div>
+      </div>
+      <span class="str-cnt" id="vs-cnt">—</span>
+    </div>
+    <div class="warn-box">
+      <b>⚠ Risk Notu — Short Pozisyon</b>
+      BIST'te short pozisyon borçlanma maliyeti, squeeze riski ve açık pozisyon limitleri içerir.
+      Bu liste kısa vadeli (1–4 hafta) taktiksel kullanım için hazırlanmıştır.
+      12-1M pozitif olan VIOP hisseleri bu listede gösterilmez.
+    </div>
+    <div id="vs-tbl"><div class="skel"></div></div>
+  </div>
+
+  <!-- STRATEJİ 3: BIST SPOT LONG -->
+  <div class="str-sec s-spot">
+    <div class="str-hdr">
+      <div class="str-icon">◆</div>
+      <div>
+        <div class="str-title">BIST Spot Long — Kaliteli Momentum</div>
+        <div class="str-desc">Yüksek 12-1M momentum + negatif FIP kombinasyonu. Gray metodolojisinin özü. 6-12 aylık periyot. S-Tier ve A-Tier önceliklidir.</div>
+      </div>
+      <span class="str-cnt" id="bl-cnt">—</span>
+    </div>
+    <div id="bl-tbl"><div class="skel"></div></div>
+  </div>
+
+</div>
+
+<script>
+// ── Format yardımcıları ───────────────────────────────────────────────────────
+const pct    = v => v!=null?(v>=0?'+':'')+((v*100).toFixed(1))+'%':'—';
+const fip    = v => v!=null?(v>=0?'+':'')+v.toFixed(4):'—';
+const momClr = v => v==null?'var(--text2)':v>0?'var(--green)':'var(--red)';
+const fipClr = v => v==null?'var(--text2)':v<0?'var(--green)':'var(--red)';
+
+function dMomFmt(v){  // ΔMom: pozitif = iyi (yeşil)
+  if(v==null) return '—';
+  const c = v>0?'var(--green)':'var(--red)';
+  const ico = v>0?'▲':'▼';
+  return `<span class="delta" style="color:${c}">${ico}${(v>=0?'+':'')+((v*100).toFixed(1))}%</span>`;
+}
+function dFipFmt(v){  // ΔFIP: negatif = iyi (yeşil)
+  if(v==null) return '—';
+  const c = v<0?'var(--green)':'var(--red)';
+  const ico = v<0?'▼':'▲';
+  return `<span class="delta" style="color:${c}">${ico}${(v>=0?'+':'')+v.toFixed(4)}</span>`;
+}
+
+function sigPills(signals){
+  if(!signals||!signals.length) return '';
+  return '<div class="sig-list">'+signals.map(s=>{
+    const cls = s.startsWith('⚠')?'sig-y':s.startsWith('✦')?'sig-b':s.includes('↑')||s.includes('uyumlu')?'sig-g':s.includes('↓')||s.includes('kısa')?'sig-r':'sig-n';
+    return `<span class="sig ${cls}">${s}</span>`;
+  }).join('')+'</div>';
+}
+
+function riskBadge(r){
+  const k={'NORMAL':'risk-N','ORTA':'risk-O','YÜKSEK':'risk-Y'};
+  return `<span class="badge ${k[r]||'risk-N'}">${r||'—'}</span>`;
+}
+function qltyBadge(q){
+  const k={'S-TİER':'ql-S','A-TİER':'ql-A','B-TİER':'ql-B'};
+  return `<span class="badge ${k[q]||'ql-B'}">${q||'—'}</span>`;
+}
+function trendBadge(t){
+  if(!t) return '';
+  const cls=t==='TREND İLE'?'tr-S tr-D':'tr-D';
+  const c=t==='TREND İLE'?'var(--green)':t==='DİKKAT'?'var(--yellow)':'var(--text2)';
+  return `<span class="badge ${cls}" style="color:${c}">${t}</span>`;
+}
+function scoreBar(sc,max,clr){
+  const w=Math.min(sc/max*100,100);
+  return `<div class="sc-bar"><div class="sc-bg"><div class="sc-fill" style="width:${w}%;background:${clr}"></div></div><span style="font-size:10px;color:var(--text2)">${sc.toFixed(1)}</span></div>`;
+}
+
+// ── Tablo render ──────────────────────────────────────────────────────────────
+function renderVL(data){
+  const mx=Math.max(...data.map(x=>x.signal.score),1);
+  const body=data.map((x,i)=>{
+    const g=x.signal;
+    return `<tr>
+      <td class="rank-c">${i+1}</td>
+      <td class="ticker-c" style="color:var(--green)">${x.ticker}</td>
+      <td class="name-c" title="${x.name}">${x.name}</td>
+      <td class="ind-c">${x.industry}</td>
+      <td class="r" style="color:${momClr(g.mom)}">${pct(g.mom)}</td>
+      <td class="r">${dMomFmt(g.delta_mom)}</td>
+      <td class="r" style="color:${fipClr(g.fip)}">${fip(g.fip)}</td>
+      <td class="r">${dFipFmt(g.delta_fip)}</td>
+      <td class="r" style="color:${momClr(g.mom_12_1)}">${pct(g.mom_12_1)}</td>
+      <td>${riskBadge(g.risk)}</td>
+      <td>${sigPills(g.signals)}</td>
+      <td>${scoreBar(g.score,mx,'var(--green)')}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('vl-cnt').textContent=data.length+' hisse';
+  document.getElementById('vl-tbl').innerHTML=`<div class="tbl-wrap"><table>
+    <thead><tr>
+      <th>#</th><th>TICKER</th><th>ŞİRKET</th><th>SEKTÖR</th>
+      <th class="r">AY MOM</th><th class="r">Δ MOM</th>
+      <th class="r">AY FIP</th><th class="r">Δ FIP</th>
+      <th class="r">12-1M</th><th>RİSK</th><th>SİNYAL</th><th>SKOR</th>
+    </tr></thead><tbody>${body}</tbody>
+  </table></div>`;
+}
+
+function renderVS(data){
+  const mx=Math.max(...data.map(x=>x.signal.score),1);
+  const body=data.map((x,i)=>{
+    const g=x.signal;
+    return `<tr>
+      <td class="rank-c">${i+1}</td>
+      <td class="ticker-c" style="color:var(--red)">${x.ticker}</td>
+      <td class="name-c" title="${x.name}">${x.name}</td>
+      <td class="ind-c">${x.industry}</td>
+      <td class="r" style="color:${momClr(g.mom)}">${pct(g.mom)}</td>
+      <td class="r">${dMomFmt(g.delta_mom)}</td>
+      <td class="r" style="color:${fipClr(g.fip)}">${fip(g.fip)}</td>
+      <td class="r" style="color:${momClr(g.mom_12_1)}">${pct(g.mom_12_1)}</td>
+      <td>${trendBadge(g.trend_align)}</td>
+      <td>${sigPills(g.signals)}</td>
+      <td>${scoreBar(g.score,mx,'var(--red)')}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('vs-cnt').textContent=data.length+' hisse';
+  document.getElementById('vs-tbl').innerHTML=`<div class="tbl-wrap"><table>
+    <thead><tr>
+      <th>#</th><th>TICKER</th><th>ŞİRKET</th><th>SEKTÖR</th>
+      <th class="r">AY MOM</th><th class="r">Δ MOM</th>
+      <th class="r">AY FIP</th><th class="r">12-1M</th>
+      <th>TREND</th><th>SİNYAL</th><th>SKOR</th>
+    </tr></thead><tbody>${body}</tbody>
+  </table></div>`;
+}
+
+function renderBL(data){
+  const mx=Math.max(...data.map(x=>x.signal.score),1);
+  const body=data.map((x,i)=>{
+    const g=x.signal;
+    return `<tr>
+      <td class="rank-c">${i+1}</td>
+      <td class="ticker-c" style="color:var(--accent)">${x.ticker}</td>
+      <td class="name-c" title="${x.name}">${x.name}</td>
+      <td class="ind-c">${x.industry}</td>
+      <td>${qltyBadge(g.quality)}</td>
+      <td class="r" style="color:var(--green)">${pct(g.mom_12_1)}</td>
+      <td class="r" style="color:${fipClr(g.fip_annual)}">${fip(g.fip_annual)}</td>
+      <td class="r" style="color:${momClr(g.mom_last)}">${pct(g.mom_last)}</td>
+      <td class="r">${dMomFmt(g.delta_mom)}</td>
+      <td class="r" style="color:${momClr(g.avg_recent)}">${pct(g.avg_recent)}</td>
+      <td style="font-size:10px;color:var(--text2)">${g.consistency}</td>
+      <td>${sigPills(g.signals)}</td>
+      <td>${scoreBar(g.score,mx,'var(--accent)')}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('bl-cnt').textContent=data.length+' hisse';
+  document.getElementById('bl-tbl').innerHTML=`<div class="tbl-wrap"><table>
+    <thead><tr>
+      <th>#</th><th>TICKER</th><th>ŞİRKET</th><th>SEKTÖR</th>
+      <th>KALİTE</th>
+      <th class="r">12-1M MOM</th><th class="r">YIL FIP</th>
+      <th class="r">AY MOM</th><th class="r">Δ MOM</th>
+      <th class="r">3AY ORT</th><th>TUTARLILIK</th>
+      <th>SİNYAL</th><th>SKOR</th>
+    </tr></thead><tbody>${body}</tbody>
+  </table></div>`;
+}
+
+// ── Timing banner ─────────────────────────────────────────────────────────────
+function renderTiming(t){
+  const upd   = document.getElementById('timing-update');
+  const updTxt= document.getElementById('timing-update-text');
+  const updIco= document.getElementById('timing-update-icon');
+  const nxtTxt= document.getElementById('timing-next-text');
+  const cd    = document.getElementById('countdown');
+
+  if(t.is_update_day){
+    upd.classList.add('today');
+    updIco.textContent = '✦';
+    updTxt.innerHTML   = `<strong style="color:var(--accent)">Bugün güncelleme günü!</strong> Son güncelleme: ${t.last_update_tr}`;
+  } else {
+    updTxt.textContent = `Son güncelleme: ${t.last_update_tr}`;
+  }
+
+  nxtTxt.textContent = `Sonraki güncelleme: ${t.next_update_tr}`;
+  const days = t.days_until;
+  if(days===0){
+    cd.textContent='Bugün';cd.classList.add('soon');
+  } else if(days===1){
+    cd.textContent='Yarın';cd.classList.add('soon');
+  } else {
+    cd.textContent=`${days} gün`;
+  }
+}
+
+// ── Veri yükle ────────────────────────────────────────────────────────────────
+fetch('data/strategies.json')
+  .then(r=>r.json())
+  .then(d=>{
+    renderTiming(d.timing);
+    renderVL(d.viop_long);
+    renderVS(d.viop_short);
+    renderBL(d.bist_long);
+  })
+  .catch(()=>{
+    ['vl-tbl','vs-tbl','bl-tbl'].forEach(id=>{
+      document.getElementById(id).innerHTML='<div class="empty">strategies.json yüklenemedi</div>';
+    });
+  });
+
+fetch('data/meta.json')
+  .then(r=>r.json())
+  .then(m=>{ document.getElementById('hdr-date').textContent='Son veri: '+m.last_updated; })
+  .catch(()=>{});
+</script>
+</body>
+</html>

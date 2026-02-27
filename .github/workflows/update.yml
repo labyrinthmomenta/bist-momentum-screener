@@ -1,10 +1,17 @@
-name: BIST Günlük Güncelleme
+name: BIST Günlük & Haftalık Güncelleme
 
 on:
   schedule:
-    # Her gün 18:30 Türkiye saati = 15:30 UTC
-    - cron: '30 15 * * 1-5'
-  workflow_dispatch:   # Manuel tetikleme butonu
+    # Her gün 18:45 Türkiye saati = 15:45 UTC (günlük kapanış verisi)
+    - cron: '45 15 * * 1-5'
+    # Her Cuma 21:30 Türkiye saati = 18:30 UTC (strateji listesi güncelleme)
+    - cron: '30 18 * * 5'
+  workflow_dispatch:
+    inputs:
+      force_strategy:
+        description: 'Strateji listesini zorla güncelle'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -24,7 +31,7 @@ jobs:
       - name: Bağımlılıkları yükle
         run: pip install yfinance openpyxl
 
-      - name: Güncelle & Siteyi derle
+      - name: Güncelle & Derle
         run: python run.py
 
       - name: Değişiklikleri kaydet
@@ -32,5 +39,5 @@ jobs:
           git config user.name  "Labyrinth Bot"
           git config user.email "bot@labyrinth.local"
           git add docs/ run.log
-          git diff --staged --quiet || git commit -m "📊 Otomatik güncelleme: $(date +'%Y-%m-%d %H:%M')"
+          git diff --staged --quiet || git commit -m "📊 Güncelleme: $(date +'%Y-%m-%d %H:%M') UTC"
           git push

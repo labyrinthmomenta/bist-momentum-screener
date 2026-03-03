@@ -411,7 +411,7 @@ function renderTable(data){
         <div class="mom-bg"><div class="mom-bar" style="left:${s.mom>=0?'50%':(50-bw)+'%'};width:${bw}%;background:${mc}"></div></div>
       </div></td>
       <td style="color:${fc}">${fipFmt(s.fip)}</td>
-      <td style="color:${momClr(lmm)}">${pctFmt(lmm)}</td>
+      <td style="color:${momClr(lmm)}">${pctFmt(lmm)}${lm.is_partial?' <span title="Kısmi ay — devam ediyor" style="color:#f0a500;font-size:10px">⚡</span>':''}</td>
       <td style="color:${fipClr(lmf)}">${fipFmt(lmf)}</td>
       <td>${npfHtml}</td>
       <td><div class="spark">${spark}</div></td>
@@ -502,11 +502,12 @@ function renderModalContent(){
     <div class="m-month-grid">${months.map(m=>{
       const neg=m.neg_count||0,pos=m.pos_count||0,flat=m.flat_count||0,tot=m.total_days||1;
       const nP=neg/tot*100,pP=pos/tot*100,fP=flat/tot*100;
-      return `<div class="m-month-card">
-        <div class="mmcard-lbl">${m.month}</div>
+      const partialBadge=m.is_partial?`<span style="font-size:10px;background:rgba(255,180,0,.15);color:#f0a500;border:1px solid rgba(255,180,0,.3);border-radius:4px;padding:1px 5px;margin-left:5px;vertical-align:middle">⚡ Kısmi ay</span>`:'';
+      return `<div class="m-month-card" style="${m.is_partial?'border-color:rgba(255,180,0,.35)':''}">
+        <div class="mmcard-lbl">${m.month}${partialBadge}</div>
         <div class="mmcard-row"><span class="mmcard-key">Momentum</span><span class="mmcard-val" style="color:${momClr(m.momentum)}">${pctFmt(m.momentum)}</span></div>
         <div class="mmcard-row"><span class="mmcard-key">FIP</span><span class="mmcard-val" style="color:${fipClr(m.fip)}">${fipFmt(m.fip)}</span></div>
-        <div class="mmcard-row"><span class="mmcard-key">Toplam gün</span><span class="mmcard-val" style="color:var(--text2)">${tot}</span></div>
+        <div class="mmcard-row"><span class="mmcard-key">Toplam gün</span><span class="mmcard-val" style="color:var(--text2)">${tot}${m.is_partial?' <span style=\'font-size:10px;color:#f0a500\'>(devam ediyor)</span>':''}</span></div>
         <div class="npf-bars">
           <div class="npf-col">
             <div class="npf-bg"><div class="npf-fill" style="height:${nP}%;background:var(--red);opacity:.8"></div></div>

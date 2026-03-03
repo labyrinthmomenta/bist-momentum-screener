@@ -115,7 +115,7 @@ def calc_fip_annual(daily, as_of_date, bist_annual_days=None):
     return round(mom * (neg / N - pos / N), 6)
 
 
-def calc_fip_monthly(daily, year, month, bist_days=None, min_days=5):
+def calc_fip_monthly(daily, year, month, bist_days=None, min_days=1):
     """
     Aylık FIP hesabı — Gray (2016) orijinal formülü:
         FIP = mom × (neg_gün/N - pos_gün/N)
@@ -163,20 +163,6 @@ def compute_all(raw: dict) -> list:
     last_date = raw['last_date']
     y, m = last_date.year, last_date.month
 
-    # Cari ayda yeterli veri var mı?
-    # Ay başında tek günlük veriyle FIP = ±1.0000 anomalisi oluşur.
-    # MIN_DAYS_FOR_CURRENT günden az veri varsa cari ayı atla.
-    MIN_DAYS_FOR_CURRENT = 5
-    import calendar as _cal
-    import datetime as _dt2
-    sample_daily = next(iter(raw['daily'].values()), {})
-    first_of_month = _dt2.date(y, m, 1)
-    last_of_month  = _dt2.date(y, m, _cal.monthrange(y, m)[1])
-    current_month_days = sum(1 for d in sample_daily if first_of_month <= d <= last_of_month)
-    if current_month_days < MIN_DAYS_FOR_CURRENT:
-        # Cari ayı monthly listesine dahil etme — önceki tamamlanmış aydan başla
-        y, m = _prev_month(y, m)
-
     # Son 13 ay listesi
     months = []
     cy, cm = y, m
@@ -217,6 +203,10 @@ def compute_all(raw: dict) -> list:
             mom_m   = calc_monthly_momentum(daily, my, mm)
             fip_m   = calc_fip_monthly(daily, my, mm, bist_days=bist_days_m)
             detail  = monthly_detail(daily, my, mm)
+            # Kısmi ay: cari ay ve işlem günü < 15 ise partial
+            is_current = (my == last_date.year and mm == last_date.month)
+            is_partial  = is_current and detail['total_days'] < 15
+
             monthly.append({
                 'month':      f"{my}-{mm:02d}",
                 'momentum':   round(mom_m,   6) if mom_m   is not None else None,
@@ -225,6 +215,7 @@ def compute_all(raw: dict) -> list:
                 'pos_count':  detail['pos_count'],
                 'flat_count': detail['flat_count'],
                 'total_days': detail['total_days'],
+                'is_partial': is_partial,
                 'days':       detail['days'],   # günlük kapanışlar
             })
 

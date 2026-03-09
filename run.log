@@ -482,3 +482,51 @@
 19:53:31  INFO        Pozitif mom  : 319
 19:53:31  INFO        Negatif FIP  : 353 (kaliteli)
 19:53:31  INFO      ==================================================
+18:05:13  INFO      Excel son veri: 2026-02-23
+18:05:14  INFO      10 gün çekilecek: 2026-02-24 → 2026-03-09
+18:05:14  INFO      Batch 1/12 (50 hisse)...
+18:05:19  ERROR     Failed to get ticker 'ANSGR.IS' reason: Failed to perform, curl: (56) Recv failure: Connection reset by peer. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+18:05:24  INFO      Batch 2/12 (50 hisse)...
+18:05:29  INFO      Batch 3/12 (50 hisse)...
+18:05:33  INFO      Batch 4/12 (50 hisse)...
+18:05:34  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: DMLKT.IS"}}}
+18:05:34  ERROR     $DMLKT.IS: possibly delisted; no timezone found
+18:05:39  ERROR     Failed to get ticker 'EKSUN.IS' reason: Failed to perform, curl: (56) Recv failure: Connection reset by peer. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+18:05:39  ERROR     $EKSUN.IS: possibly delisted; no timezone found
+18:05:40  ERROR     
+2 Failed downloads:
+18:05:40  ERROR     ['DMLKT.IS', 'EKSUN.IS']: possibly delisted; no timezone found
+18:05:41  INFO      Batch 5/12 (50 hisse)...
+18:05:46  INFO      Batch 6/12 (50 hisse)...
+18:05:57  ERROR     Failed to get ticker 'ISSEN.IS' reason: Failed to perform, curl: (28) Connection timed out after 10002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+18:05:57  ERROR     $ISSEN.IS: possibly delisted; no timezone found
+18:05:58  ERROR     Failed to get ticker 'ISDMR.IS' reason: Failed to perform, curl: (28) Connection timed out after 10002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+18:05:58  ERROR     $ISDMR.IS: possibly delisted; no timezone found
+18:06:01  ERROR     Failed to get ticker 'INVES.IS' reason: Failed to perform, curl: (28) Connection timed out after 10002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+18:06:01  ERROR     $INVES.IS: possibly delisted; no timezone found
+18:06:01  ERROR     Failed to get ticker 'ICBCT.IS' reason: Failed to perform, curl: (28) Connection timed out after 10002 milliseconds. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+18:06:01  ERROR     $ICBCT.IS: possibly delisted; no timezone found
+18:06:01  ERROR     
+4 Failed downloads:
+18:06:01  ERROR     ['ISSEN.IS', 'ISDMR.IS', 'INVES.IS', 'ICBCT.IS']: possibly delisted; no timezone found
+18:06:02  INFO      Batch 7/12 (50 hisse)...
+18:06:07  INFO      Batch 8/12 (50 hisse)...
+18:06:12  INFO      Batch 9/12 (50 hisse)...
+18:06:17  INFO      Batch 10/12 (50 hisse)...
+18:06:22  INFO      Batch 11/12 (50 hisse)...
+18:06:27  INFO      Batch 12/12 (44 hisse)...
+18:06:30  INFO      Veri gelen gün: 10
+18:06:31  INFO      Backup: Claude_Momentum_Screener_BIST_Labyrinth_backup_20260309_180631.xlsx
+18:06:38  INFO      Yazılan hücre: 5876
+18:06:47  INFO      Excel güncellendi — veri yeniden yükleniyor...
+18:06:48  INFO      Excel okunuyor...
+18:06:50  INFO      594 hisse hesaplandı.
+18:06:51  INFO      stocks.json: 944 KB
+18:06:51  INFO      detail/ klasörü: 594 dosya
+18:06:51  INFO      Site → docs/index.html
+18:06:51  INFO      ==================================================
+18:06:51  INFO        Son veri     : 2026-03-09
+18:06:51  INFO        Toplam hisse : 594
+18:06:51  INFO        Pozitif mom  : 319
+18:06:51  INFO        Negatif FIP  : 354 (kaliteli)
+18:06:51  INFO      ==================================================

@@ -1,5 +1,4 @@
 name: BIST Günlük & Haftalık Güncelleme
-
 on:
   schedule:
     # Her gün 18:45 Türkiye saati = 15:45 UTC (günlük kapanış verisi)
@@ -12,29 +11,23 @@ on:
         description: 'Strateji listesini zorla güncelle'
         type: boolean
         default: false
-
 permissions:
   contents: write
-
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
       - name: Repo çek
         uses: actions/checkout@v4
-
       - name: Python kur
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
       - name: Bağımlılıkları yükle
         run: pip install yfinance openpyxl
-
       - name: Güncelle & Derle
         run: python run.py
-
-- name: Değişiklikleri kaydet
+      - name: Değişiklikleri kaydet
         run: |
           git config user.name  "Labyrinth Bot"
           git config user.email "bot@labyrinth.local"

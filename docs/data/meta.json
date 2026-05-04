@@ -1,10 +1,10 @@
 {
-  "last_updated": "2026-04-30",
+  "last_updated": "2026-05-04",
   "total": 594,
   "viop": 48,
-  "pos_mom": 296,
-  "neg_mom": 298,
-  "neg_fip": 356,
-  "pos_fip": 238,
-  "generated_at": "2026-05-01T19:48:39.893986Z"
+  "pos_mom": 383,
+  "neg_mom": 211,
+  "neg_fip": 313,
+  "pos_fip": 281,
+  "generated_at": "2026-05-04T17:17:36.563861Z"
 }

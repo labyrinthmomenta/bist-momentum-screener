@@ -2507,3 +2507,49 @@
 17:17:36  INFO        Pozitif mom  : 383
 17:17:36  INFO        Negatif FIP  : 313 (kaliteli)
 17:17:36  INFO      ==================================================
+17:07:41  INFO      Excel son veri: 2026-02-23
+17:07:43  INFO      51 gün çekilecek: 2026-02-24 → 2026-05-05
+17:07:43  INFO      Batch 1/12 (50 hisse)...
+17:07:43  INFO      Failed to create TzCache, reason: Error creating TzCache folder: '/home/runner/.cache/py-yfinance' reason: [Errno 17] File exists: '/home/runner/.cache/py-yfinance'. TzCache will not be used. Tip: You can direct cache to use a different location with 'set_tz_cache_location(mylocation)'
+17:07:47  INFO      Batch 2/12 (50 hisse)...
+17:07:51  INFO      Batch 3/12 (50 hisse)...
+17:07:55  INFO      Batch 4/12 (50 hisse)...
+17:07:56  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: DMLKT.IS"}}}
+17:07:56  ERROR     $DMLKT.IS: possibly delisted; no timezone found
+17:07:57  ERROR     
+1 Failed download:
+17:07:57  ERROR     ['DMLKT.IS']: possibly delisted; no timezone found
+17:07:58  INFO      Batch 5/12 (50 hisse)...
+17:08:02  INFO      Batch 6/12 (50 hisse)...
+17:08:05  INFO      Batch 7/12 (50 hisse)...
+17:08:09  INFO      Batch 8/12 (50 hisse)...
+17:08:12  INFO      Batch 9/12 (50 hisse)...
+17:08:15  INFO      Batch 10/12 (50 hisse)...
+17:08:19  INFO      Batch 11/12 (50 hisse)...
+17:08:21  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: SNKRN.IS"}}}
+17:08:21  ERROR     $SNKRN.IS: possibly delisted; no timezone found
+17:08:21  ERROR     
+1 Failed download:
+17:08:21  ERROR     ['SNKRN.IS']: possibly delisted; no timezone found
+17:08:22  INFO      Batch 12/12 (44 hisse)...
+17:08:23  ERROR     $YGYO.IS: possibly delisted; no timezone found
+17:08:24  ERROR     
+1 Failed download:
+17:08:24  ERROR     ['YGYO.IS']: possibly delisted; no timezone found
+17:08:25  INFO      Veri gelen gün: 50
+17:08:25  INFO      Backup: Claude_Momentum_Screener_BIST_Labyrinth_backup_20260505_170825.xlsx
+17:08:33  WARNING   2026-04-23 Excel'de yok
+17:08:33  WARNING   2026-05-01 Excel'de yok
+17:08:33  INFO      Yazılan hücre: 28026
+17:08:43  INFO      Excel güncellendi — veri yeniden yükleniyor...
+17:08:44  INFO      Excel okunuyor...
+17:08:46  INFO      594 hisse hesaplandı.
+17:08:46  INFO      stocks.json: 944 KB
+17:08:46  INFO      detail/ klasörü: 594 dosya
+17:08:46  INFO      Site → docs/index.html
+17:08:46  INFO      ==================================================
+17:08:46  INFO        Son veri     : 2026-05-05
+17:08:46  INFO        Toplam hisse : 594
+17:08:46  INFO        Pozitif mom  : 383
+17:08:46  INFO        Negatif FIP  : 313 (kaliteli)
+17:08:46  INFO      ==================================================

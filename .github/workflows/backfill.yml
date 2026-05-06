@@ -1,0 +1,51 @@
+name: Veri Backfill (Eksik Günleri Doldur)
+
+on:
+  workflow_dispatch:
+    inputs:
+      fix_mode:
+        description: 'Eksikleri doldur (fix). Hayır = sadece rapor göster.'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo çek
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıkları yükle
+        run: pip install yfinance openpyxl
+
+      - name: Backfill çalıştır
+        run: |
+          if [ "${{ github.event.inputs.fix_mode }}" = "true" ]; then
+            echo "🔧 FIX modu — eksikler doldurulacak"
+            python backfill.py --fix
+          else
+            echo "📋 RAPOR modu — sadece eksikler listeleniyor"
+            python backfill.py
+          fi
+
+      - name: Siteyi yeniden derle (sadece fix modunda)
+        if: ${{ github.event.inputs.fix_mode == 'true' }}
+        run: python run.py
+
+      - name: Değişiklikleri kaydet (sadece fix modunda)
+        if: ${{ github.event.inputs.fix_mode == 'true' }}
+        run: |
+          git config user.name  "Labyrinth Bot"
+          git config user.email "bot@labyrinth.local"
+          git add docs/ run.log
+          git diff --staged --quiet || git commit -m "🔧 Backfill: $(date +'%Y-%m-%d %H:%M') UTC"
+          git pull --rebase --autostash origin main
+          git push

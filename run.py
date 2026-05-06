@@ -34,9 +34,18 @@ def main():
     log.info(f"Excel son veri: {last_date}")
 
     # 2. Yeni günler var mı?
+    # Her hissenin kendi son tarihini hesapla — genel last_date değil
     from fetch import fetch_missing_days
-    tickers  = list(raw['daily'].keys())
-    fetched  = fetch_missing_days(tickers, last_date)
+    tickers = list(raw['daily'].keys())
+    per_ticker_last = {}
+    for t in tickers:
+        days = raw['daily'].get(t, {})
+        if days:
+            per_ticker_last[t] = max(days.keys())
+        else:
+            per_ticker_last[t] = last_date
+    log.info(f"Per-ticker last_date hesaplandı — {len(per_ticker_last)} hisse")
+    fetched = fetch_missing_days(tickers, last_date, per_ticker_last=per_ticker_last)
 
     # 3. Yeni veriyi Excel'e yaz
     if fetched:
@@ -49,8 +58,17 @@ def main():
     from build_site import build
     stocks, meta = build(excel, Path(OUTPUT_DIR))
 
-    from build_site import build_strategies
-    build_strategies(stocks, Path(OUTPUT_DIR))
+    # Strateji listesi yalnızca Cuma kapanış sonrası güncellenir
+    import datetime as _dt
+    _today = _dt.date.today()
+    _is_friday = _today.weekday() == 4   # 0=Pazartesi, 4=Cuma
+    _strategy_file = Path(OUTPUT_DIR) / 'data' / 'strategies.json'
+    if _is_friday or not _strategy_file.exists():
+        from build_site import build_strategies
+        build_strategies(stocks, Path(OUTPUT_DIR))
+        log.info(f"Strateji listesi güncellendi ({_today})")
+    else:
+        log.info(f"Strateji listesi korundu — güncelleme günü değil (bugün: {_today.strftime('%A')})")
     log.info("=" * 50)
     log.info(f"  Son veri     : {meta['last_updated']}")
     log.info(f"  Toplam hisse : {meta['total']}")

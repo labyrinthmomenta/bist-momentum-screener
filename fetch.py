@@ -1,6 +1,9 @@
 """
 fetch.py — yfinance ile BIST verisi çekme
 Sunucuda çalışır (GitHub Actions), Mac bağlantı sorunu yok.
+
+v2: Her hisse kendi son tarihine göre eksik günlerini doldurur.
+    Tek bir global last_date yerine per-ticker last_date kullanılır.
 """
 import math, datetime, time, logging
 from pathlib import Path
@@ -14,9 +17,16 @@ MAX_RETRIES   = 3
 BATCH_DELAY   = 1.0
 
 
-def fetch_missing_days(tickers: list, last_filled: datetime.date) -> dict:
+def fetch_missing_days(tickers: list, last_filled: datetime.date,
+                       per_ticker_last: dict = None) -> dict:
     """
-    Son dolu günden bugüne kadar eksik günlerin verisini çeker.
+    Her hissenin kendi son tarihinden bugüne kadar eksik günlerin verisini çeker.
+
+    Args:
+        tickers:          Hisse listesi
+        last_filled:      Global son tarih (fallback — per_ticker_last yoksa kullanılır)
+        per_ticker_last:  {ticker: last_date} — her hissenin kendi son tarihi
+
     Döner: {date: {ticker: pct_change_decimal}}
     """
     try:
@@ -26,18 +36,34 @@ def fetch_missing_days(tickers: list, last_filled: datetime.date) -> dict:
         return {}
 
     today = datetime.date.today()
-    # Sadece hafta içi
-    missing = [
-        d for d in _business_days(last_filled + datetime.timedelta(days=1), today)
-    ]
-    if not missing:
+
+    # Her hisse için eksik olan günleri hesapla
+    ticker_missing = {}   # {ticker: [date, ...]}
+    all_missing    = set()
+
+    for t in tickers:
+        if per_ticker_last and t in per_ticker_last:
+            t_last = per_ticker_last[t]
+        else:
+            t_last = last_filled
+
+        missing_for_t = list(_business_days(
+            t_last + datetime.timedelta(days=1), today
+        ))
+        if missing_for_t:
+            ticker_missing[t] = missing_for_t
+            all_missing.update(missing_for_t)
+
+    if not all_missing:
         log.info("Güncel — çekilecek gün yok.")
         return {}
 
-    log.info(f"{len(missing)} gün çekilecek: {missing[0]} → {missing[-1]}")
+    all_missing_sorted = sorted(all_missing)
+    log.info(f"Toplam eksik gün aralığı: {all_missing_sorted[0]} → {all_missing_sorted[-1]}")
+    log.info(f"Eksik verisi olan hisse sayısı: {len(ticker_missing)}")
 
-    fetch_start = (missing[0] - datetime.timedelta(days=7)).strftime("%Y-%m-%d")
-    fetch_end   = (missing[-1] + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+    fetch_start = (all_missing_sorted[0]  - datetime.timedelta(days=7)).strftime("%Y-%m-%d")
+    fetch_end   = (all_missing_sorted[-1] + datetime.timedelta(days=1)).strftime("%Y-%m-%d")
     yf_tickers  = [t + YF_SUFFIX for t in tickers]
 
     result = {}
@@ -66,15 +92,20 @@ def fetch_missing_days(tickers: list, last_filled: datetime.date) -> dict:
                 pct = close.pct_change()   # ondalık (0.01 = %1)
 
                 for yf_t, orig_t in zip(batch, batch_names):
-                    if yf_t not in pct.columns: continue
+                    if yf_t not in pct.columns:
+                        continue
+                    # Bu hissenin eksik günleri — global all_missing değil, kendi listesi
+                    t_missing_set = set(ticker_missing.get(orig_t, []))
                     for dt_idx in pct.index:
                         d = dt_idx.date() if hasattr(dt_idx, "date") else dt_idx
-                        if d not in missing: continue
+                        if d not in t_missing_set:
+                            continue
                         try:
                             v = float(pct[yf_t].loc[dt_idx])
                             if not (math.isnan(v) or math.isinf(v)):
                                 result.setdefault(d, {})[orig_t] = v
-                        except: pass
+                        except:
+                            pass
                 break
             except Exception as e:
                 log.warning(f"  Deneme {attempt+1}: {e}")
@@ -84,7 +115,7 @@ def fetch_missing_days(tickers: list, last_filled: datetime.date) -> dict:
         if bs + BATCH_SIZE < len(yf_tickers):
             time.sleep(BATCH_DELAY)
 
-    log.info(f"Veri gelen gün: {len(result)}")
+    log.info(f"Veri gelen gün sayısı: {len(result)}")
     return result
 
 

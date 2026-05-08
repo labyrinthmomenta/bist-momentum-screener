@@ -2741,3 +2741,49 @@
 17:25:15  INFO        Pozitif mom  : 383
 17:25:15  INFO        Negatif FIP  : 313 (kaliteli)
 17:25:15  INFO      ==================================================
+07:17:24  INFO      Excel son veri: 2026-05-07
+07:17:24  INFO      Per-ticker last_date hesaplandı — 594 hisse
+07:17:26  INFO      Toplam eksik gün aralığı: 2026-02-16 → 2026-05-08
+07:17:26  INFO      Eksik verisi olan hisse sayısı: 594
+07:17:26  INFO      Batch 1/12 (50 hisse)...
+07:17:28  INFO      Batch 2/12 (50 hisse)...
+07:17:31  INFO      Batch 3/12 (50 hisse)...
+07:17:33  INFO      Batch 4/12 (50 hisse)...
+07:17:34  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: DMLKT.IS"}}}
+07:17:34  ERROR     $DMLKT.IS: possibly delisted; no timezone found
+07:17:35  ERROR     
+1 Failed download:
+07:17:35  ERROR     ['DMLKT.IS']: possibly delisted; no timezone found
+07:17:36  INFO      Batch 5/12 (50 hisse)...
+07:17:39  INFO      Batch 6/12 (50 hisse)...
+07:17:42  INFO      Batch 7/12 (50 hisse)...
+07:17:45  INFO      Batch 8/12 (50 hisse)...
+07:17:48  INFO      Batch 9/12 (50 hisse)...
+07:17:51  INFO      Batch 10/12 (50 hisse)...
+07:17:54  INFO      Batch 11/12 (50 hisse)...
+07:17:55  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: SNKRN.IS"}}}
+07:17:55  ERROR     $SNKRN.IS: possibly delisted; no timezone found
+07:17:57  ERROR     
+1 Failed download:
+07:17:57  ERROR     ['SNKRN.IS']: possibly delisted; no timezone found
+07:17:58  INFO      Batch 12/12 (44 hisse)...
+07:17:59  ERROR     $YGYO.IS: possibly delisted; no timezone found
+07:18:00  ERROR     
+1 Failed download:
+07:18:00  ERROR     ['YGYO.IS']: possibly delisted; no timezone found
+07:18:00  INFO      Veri gelen gün sayısı: 1
+07:18:01  INFO      Backup: Claude_Momentum_Screener_BIST_Labyrinth_backup_20260508_071801.xlsx
+07:18:09  INFO      Yazılan hücre: 591
+07:18:18  INFO      Excel güncellendi — veri yeniden yükleniyor...
+07:18:20  INFO      Excel okunuyor...
+07:18:22  INFO      594 hisse hesaplandı.
+07:18:23  INFO      stocks.json: 945 KB
+07:18:23  INFO      detail/ klasörü: 594 dosya
+07:18:23  INFO      Site → docs/index.html
+07:18:23  INFO      Strateji listesi güncellendi (2026-05-08)
+07:18:23  INFO      ==================================================
+07:18:23  INFO        Son veri     : 2026-05-08
+07:18:23  INFO        Toplam hisse : 594
+07:18:23  INFO        Pozitif mom  : 383
+07:18:23  INFO        Negatif FIP  : 313 (kaliteli)
+07:18:23  INFO      ==================================================

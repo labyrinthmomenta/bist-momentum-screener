@@ -1,0 +1,53 @@
+name: JSON → Excel Senkronizasyonu
+
+on:
+  workflow_dispatch:
+    inputs:
+      fix_mode:
+        description: 'Excel güncelle (fix). Hayır = sadece rapor göster.'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo çek
+        uses: actions/checkout@v4
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bağımlılıkları yükle
+        run: pip install openpyxl
+
+      - name: JSON → Excel senkronizasyonu
+        run: |
+          if [ "${{ github.event.inputs.fix_mode }}" = "true" ]; then
+            echo "🔧 FIX modu — Excel güncelleniyor"
+            python json_to_excel.py --fix
+          else
+            echo "📋 RAPOR modu — sadece eksikler listeleniyor"
+            python json_to_excel.py
+          fi
+
+      - name: Siteyi yeniden derle (sadece fix modunda)
+        if: ${{ github.event.inputs.fix_mode == 'true' }}
+        run: |
+          pip install yfinance
+          python run.py
+
+      - name: Değişiklikleri kaydet (sadece fix modunda)
+        if: ${{ github.event.inputs.fix_mode == 'true' }}
+        run: |
+          git config user.name  "Labyrinth Bot"
+          git config user.email "bot@labyrinth.local"
+          git add docs/ run.log
+          git diff --staged --quiet || git commit -m "🔄 JSON→Excel sync: $(date +'%Y-%m-%d %H:%M') UTC"
+          git pull --rebase --autostash origin main
+          git push

@@ -3009,3 +3009,46 @@
 15:12:22  INFO        Pozitif mom  : 383
 15:12:22  INFO        Negatif FIP  : 310 (kaliteli)
 15:12:22  INFO      ==================================================
+15:16:47  INFO      Excel son veri: 2026-05-08
+15:16:47  INFO      Per-ticker last_date hesaplandı — 594 hisse
+15:16:48  INFO      Toplam eksik gün aralığı: 2026-02-16 → 2026-05-08
+15:16:48  INFO      Eksik verisi olan hisse sayısı: 3
+15:16:48  INFO      Batch 1/12 (50 hisse)...
+15:16:51  INFO      Batch 2/12 (50 hisse)...
+15:16:53  INFO      Batch 3/12 (50 hisse)...
+15:16:57  INFO      Batch 4/12 (50 hisse)...
+15:16:57  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: DMLKT.IS"}}}
+15:16:57  ERROR     $DMLKT.IS: possibly delisted; no timezone found
+15:17:02  ERROR     
+1 Failed download:
+15:17:02  ERROR     ['DMLKT.IS']: possibly delisted; no timezone found
+15:17:03  INFO      Batch 5/12 (50 hisse)...
+15:17:07  INFO      Batch 6/12 (50 hisse)...
+15:17:09  INFO      Batch 7/12 (50 hisse)...
+15:17:13  INFO      Batch 8/12 (50 hisse)...
+15:17:17  INFO      Batch 9/12 (50 hisse)...
+15:17:21  INFO      Batch 10/12 (50 hisse)...
+15:17:24  INFO      Batch 11/12 (50 hisse)...
+15:17:28  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: SNKRN.IS"}}}
+15:17:28  ERROR     $SNKRN.IS: possibly delisted; no timezone found
+15:17:28  ERROR     
+1 Failed download:
+15:17:28  ERROR     ['SNKRN.IS']: possibly delisted; no timezone found
+15:17:29  INFO      Batch 12/12 (44 hisse)...
+15:17:30  ERROR     $YGYO.IS: possibly delisted; no timezone found
+15:17:31  ERROR     
+1 Failed download:
+15:17:31  ERROR     ['YGYO.IS']: possibly delisted; no timezone found
+15:17:31  INFO      Veri gelen gün sayısı: 0
+15:17:31  INFO      Excel okunuyor...
+15:17:33  INFO      594 hisse hesaplandı.
+15:17:34  INFO      stocks.json: 945 KB
+15:17:34  INFO      detail/ klasörü: 594 dosya
+15:17:34  INFO      Site → docs/index.html
+15:17:34  INFO      Strateji listesi korundu — güncelleme günü değil (bugün: Sunday)
+15:17:34  INFO      ==================================================
+15:17:34  INFO        Son veri     : 2026-05-08
+15:17:34  INFO        Toplam hisse : 594
+15:17:34  INFO        Pozitif mom  : 383
+15:17:34  INFO        Negatif FIP  : 310 (kaliteli)
+15:17:34  INFO      ==================================================

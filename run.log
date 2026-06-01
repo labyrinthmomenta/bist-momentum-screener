@@ -3938,3 +3938,53 @@
 20:42:45  INFO        Pozitif mom  : 383
 20:42:45  INFO        Negatif FIP  : 310 (kaliteli)
 20:42:45  INFO      ==================================================
+20:03:58  INFO      Excel son veri: 2026-05-21
+20:03:58  INFO      Per-ticker last_date hesaplandı — 594 hisse
+20:03:59  INFO      Toplam eksik gün aralığı: 2026-02-16 → 2026-06-01
+20:03:59  INFO      Eksik verisi olan hisse sayısı: 594
+20:03:59  INFO      Batch 1/12 (50 hisse)...
+20:03:59  INFO      Failed to create TzCache, reason: Error creating TzCache folder: '/home/runner/.cache/py-yfinance' reason: [Errno 17] File exists: '/home/runner/.cache/py-yfinance'. TzCache will not be used. Tip: You can direct cache to use a different location with 'set_tz_cache_location(mylocation)'
+20:04:03  INFO      Batch 2/12 (50 hisse)...
+20:04:06  INFO      Batch 3/12 (50 hisse)...
+20:04:08  INFO      Batch 4/12 (50 hisse)...
+20:04:13  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: DMLKT.IS"}}}
+20:04:13  ERROR     $DMLKT.IS: possibly delisted; no timezone found
+20:04:13  ERROR     
+1 Failed download:
+20:04:13  ERROR     ['DMLKT.IS']: possibly delisted; no timezone found
+20:04:14  INFO      Batch 5/12 (50 hisse)...
+20:04:19  INFO      Batch 6/12 (50 hisse)...
+20:04:22  INFO      Batch 7/12 (50 hisse)...
+20:04:28  INFO      Batch 8/12 (50 hisse)...
+20:04:32  INFO      Batch 9/12 (50 hisse)...
+20:04:36  INFO      Batch 10/12 (50 hisse)...
+20:04:42  INFO      Batch 11/12 (50 hisse)...
+20:04:42  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: SNKRN.IS"}}}
+20:04:42  ERROR     $SNKRN.IS: possibly delisted; no timezone found
+20:04:47  ERROR     
+1 Failed download:
+20:04:47  ERROR     ['SNKRN.IS']: possibly delisted; no timezone found
+20:04:49  INFO      Batch 12/12 (44 hisse)...
+20:04:49  ERROR     $YGYO.IS: possibly delisted; no timezone found
+20:04:52  ERROR     
+1 Failed download:
+20:04:52  ERROR     ['YGYO.IS']: possibly delisted; no timezone found
+20:04:52  INFO      Veri gelen gün sayısı: 7
+20:04:53  INFO      Backup: Claude_Momentum_Screener_BIST_Labyrinth_backup_20260601_200453.xlsx
+20:05:01  WARNING   2026-05-27 Excel'de yok
+20:05:01  WARNING   2026-05-28 Excel'de yok
+20:05:01  WARNING   2026-05-29 Excel'de yok
+20:05:01  INFO      Yazılan hücre: 2361
+20:05:10  INFO      Excel güncellendi — veri yeniden yükleniyor...
+20:05:12  INFO      Excel okunuyor...
+20:05:14  INFO      594 hisse hesaplandı.
+20:05:15  INFO      stocks.json: 944 KB
+20:05:15  INFO      detail/ klasörü: 594 dosya
+20:05:15  INFO      Site → docs/index.html
+20:05:15  INFO      Strateji listesi korundu — güncelleme günü değil (bugün: Monday)
+20:05:15  INFO      ==================================================
+20:05:15  INFO        Son veri     : 2026-06-01
+20:05:15  INFO        Toplam hisse : 594
+20:05:15  INFO        Pozitif mom  : 416
+20:05:15  INFO        Negatif FIP  : 292 (kaliteli)
+20:05:15  INFO      ==================================================

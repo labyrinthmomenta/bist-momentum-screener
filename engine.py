@@ -95,8 +95,13 @@ def calc_monthly_momentum(daily, year, month):
 
 def calc_fip_annual(daily, as_of_date, bist_annual_days=None):
     """
-    Yıllık FIP hesabı — Gray (2016) orijinal formülü:
-        FIP = mom_12_1 × (neg_gün/N - pos_gün/N)
+    Yıllık FIP hesabı — Gray & Vogel (2016) orijinal formülü:
+        FIP = sign(mom_12_1) × (neg_gün/N - pos_gün/N)
+
+    sign() kullanımı: Momentumun büyüklüğü FIP değerini etkilemez,
+    sadece yönü (pozitif/negatif trend) FIP işaretini belirler.
+    Bu, farklı büyüklükteki momentumları karşılaştırılabilir kılar.
+
     N = 12 aylık penceredeki toplam BIST işlem günü (flat dahil).
     """
     y, m    = as_of_date.year, as_of_date.month
@@ -109,22 +114,22 @@ def calc_fip_annual(daily, as_of_date, bist_annual_days=None):
     if len(rets) < 10: return None
     mom = calc_momentum_12_1(daily, as_of_date)
     if mom is None: return None
+    sign_mom = 1 if mom > 0 else (-1 if mom < 0 else 0)
     N   = len(bist_annual_days) if bist_annual_days else len(rets)
     neg = sum(1 for r in rets if r < 0)
     pos = sum(1 for r in rets if r > 0)
-    return round(mom * (neg / N - pos / N), 6)
+    return round(sign_mom * (neg / N - pos / N), 6)
 
 
 def calc_fip_monthly(daily, year, month, bist_days=None, min_days=1):
     """
-    Aylık FIP hesabı — Gray (2016) orijinal formülü:
-        FIP = mom × (neg_gün/N - pos_gün/N)
-    Burada N = o ayın BIST toplam işlem günü sayısı (flat günler dahil).
-    Payda olarak hissede veri olan gün değil, piyasanın açık olduğu
-    toplam gün kullanılır. Bu, momentum büyüklüğünü FIP'e yansıtır.
+    Aylık FIP hesabı — Gray & Vogel (2016) orijinal formülü:
+        FIP = sign(mom) × (neg_gün/N - pos_gün/N)
 
-    bist_days: O aya ait BIST işlem günleri listesi (dışarıdan verilmezse
-               sadece hissede veri olan günler kullanılır — yaklaşık).
+    sign() kullanımı: Momentumun büyüklüğü değil sadece yönü FIP'i etkiler.
+    N = o ayın BIST toplam işlem günü (flat dahil).
+
+    bist_days: O aya ait BIST işlem günleri listesi.
     min_days : Anlamlı FIP için minimum veri eşiği.
     """
     first, last = _month_window(year, month)
@@ -132,11 +137,11 @@ def calc_fip_monthly(daily, year, month, bist_days=None, min_days=1):
     if len(rets) < min_days: return None
     mom = calc_monthly_momentum(daily, year, month)
     if mom is None: return None
-    # N: o ayın toplam BIST işlem günü — flat günler paydada yer alır
+    sign_mom = 1 if mom > 0 else (-1 if mom < 0 else 0)
     N   = len(bist_days) if bist_days else len(rets)
     neg = sum(1 for r in rets if r < 0)
     pos = sum(1 for r in rets if r > 0)
-    return round(mom * (neg / N - pos / N), 6)
+    return round(sign_mom * (neg / N - pos / N), 6)
 
 
 # ── Aylık detay (neg/pos/flat sayıları + günlük kapanışlar) ──────────────────

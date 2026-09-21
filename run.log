@@ -9070,3 +9070,71 @@
 12:43:50  INFO        Pozitif mom  : 203
 12:43:50  INFO        Negatif FIP  : 441 (kaliteli)
 12:43:50  INFO      ==================================================
+20:07:10  INFO      Excel son veri: 2026-09-21
+20:07:10  INFO      156 gün çekilecek: 2026-02-16 → 2026-09-21
+20:07:10  INFO      Batch 1/12 (50 hisse)...
+20:07:15  INFO      Batch 2/12 (50 hisse)...
+20:07:20  INFO      Batch 3/12 (50 hisse)...
+20:07:25  INFO      Batch 4/12 (50 hisse)...
+20:07:26  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: DMLKT.IS"}}}
+20:07:26  ERROR     $DMLKT.IS: possibly delisted; no timezone found
+20:07:26  ERROR     
+1 Failed download:
+20:07:26  ERROR     ['DMLKT.IS']: possibly delisted; no timezone found
+20:07:29  INFO      Batch 5/12 (50 hisse)...
+20:07:34  INFO      Batch 6/12 (50 hisse)...
+20:07:39  INFO      Batch 7/12 (50 hisse)...
+20:07:43  INFO      Batch 8/12 (50 hisse)...
+20:07:48  INFO      Batch 9/12 (50 hisse)...
+20:07:53  INFO      Batch 10/12 (50 hisse)...
+20:07:57  INFO      Batch 11/12 (50 hisse)...
+20:07:58  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: SNKRN.IS"}}}
+20:07:58  ERROR     $SNKRN.IS: possibly delisted; no timezone found
+20:07:59  ERROR     
+1 Failed download:
+20:07:59  ERROR     ['SNKRN.IS']: possibly delisted; no timezone found
+20:08:02  INFO      Batch 12/12 (44 hisse)...
+20:08:02  ERROR     $YGYO.IS: possibly delisted; no timezone found
+20:08:03  ERROR     
+1 Failed download:
+20:08:03  ERROR     ['YGYO.IS']: possibly delisted; no timezone found
+20:08:04  INFO      Veri gelen gün: 155
+20:08:04  WARNING     ⚠️  Şüpheli:    MARTI 2026-02-17 ret=-36.7% — corporate action olabilir
+20:08:04  WARNING     ⚠️  Şüpheli:    QNBFK 2026-03-23 ret=-22.3% — corporate action olabilir
+20:08:04  WARNING     ⚠️  Şüpheli:    IHLAS 2026-06-02 ret=-22.2% — corporate action olabilir
+20:08:04  WARNING     ⚠️  Şüpheli:    SEKFK 2026-07-13 ret=-44.7% — corporate action olabilir
+20:08:04  WARNING     🚫 Quarantine: KRTEK 2026-07-27 ret=-71.7% — HARD_CAP
+20:08:04  WARNING     🚫 Quarantine: CVKMD 2026-08-03 ret=-61.9% — HARD_CAP
+20:08:04  WARNING     ⚠️  Şüpheli:    DUNYH 2026-09-21 ret=-37.8% — corporate action olabilir
+20:08:04  WARNING     🚫 Quarantine: MERKO 2026-05-01 ret=-86.5% — HARD_CAP
+20:08:04  WARNING   Sanity check: 8 şüpheli kayıt (3 quarantine)
+20:08:04  WARNING   Sanity check: 8 şüpheli kayıt tespit edildi.
+20:08:04  INFO      Backup: Claude_Momentum_Screener_BIST_Labyrinth_backup_20260921_200804.xlsx
+20:08:12  INFO      7 yeni tarih sütunu ekleniyor: 2026-04-23 → 2026-07-15
+20:08:12  INFO        Yeni sütun: 2026-04-23 → col 495
+20:08:12  INFO        Yeni sütun: 2026-05-01 → col 496
+20:08:12  INFO        Yeni sütun: 2026-05-19 → col 497
+20:08:12  INFO        Yeni sütun: 2026-05-27 → col 498
+20:08:12  INFO        Yeni sütun: 2026-05-28 → col 499
+20:08:12  INFO        Yeni sütun: 2026-05-29 → col 500
+20:08:12  INFO        Yeni sütun: 2026-07-15 → col 501
+20:08:12  INFO      Yazılan hücre  : 87144
+20:08:19  INFO      Excel güncellendi — veri yeniden yükleniyor...
+20:08:20  INFO      ──────────────────────────────────────────────────
+20:08:20  INFO        Beklenen son işlem günü : 2026-09-21
+20:08:20  INFO        Veri coverage           : 590/594 = %99.3
+20:08:20  INFO        Circuit breaker eşiği   : %95
+20:08:20  INFO        Durum                   : ✅ OK
+20:08:20  INFO      ──────────────────────────────────────────────────
+20:08:20  INFO      Excel okunuyor...
+20:08:23  INFO      594 hisse hesaplandı.
+20:08:24  INFO      stocks.json: 942 KB
+20:08:24  INFO      detail/ klasörü: 594 dosya
+20:08:24  INFO      Site → docs/index.html
+20:08:24  INFO      Strateji korundu — Cuma değil (bugün: Monday)
+20:08:24  INFO      ==================================================
+20:08:24  INFO        Son veri     : 2026-09-21
+20:08:24  INFO        Toplam hisse : 594
+20:08:24  INFO        Pozitif mom  : 187
+20:08:24  INFO        Negatif FIP  : 453 (kaliteli)
+20:08:24  INFO      ==================================================

@@ -8970,3 +8970,50 @@
 19:24:06  INFO        Pozitif mom  : 203
 19:24:06  INFO        Negatif FIP  : 441 (kaliteli)
 19:24:06  INFO      ==================================================
+06:47:29  INFO      Excel son veri: 2026-09-18
+06:47:30  INFO      156 gün çekilecek: 2026-02-16 → 2026-09-21
+06:47:30  INFO      Batch 1/12 (50 hisse)...
+06:47:34  INFO      Batch 2/12 (50 hisse)...
+06:47:39  INFO      Batch 3/12 (50 hisse)...
+06:47:43  INFO      Batch 4/12 (50 hisse)...
+06:47:45  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: DMLKT.IS"}}}
+06:47:45  ERROR     $DMLKT.IS: possibly delisted; no timezone found
+06:47:45  ERROR     
+1 Failed download:
+06:47:45  ERROR     ['DMLKT.IS']: possibly delisted; no timezone found
+06:47:49  INFO      Batch 5/12 (50 hisse)...
+06:47:55  INFO      Batch 6/12 (50 hisse)...
+06:48:01  INFO      Batch 7/12 (50 hisse)...
+06:48:07  INFO      Batch 8/12 (50 hisse)...
+06:48:13  INFO      Batch 9/12 (50 hisse)...
+06:48:20  INFO      Batch 10/12 (50 hisse)...
+06:48:26  INFO      Batch 11/12 (50 hisse)...
+06:48:26  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: SNKRN.IS"}}}
+06:48:27  ERROR     $SNKRN.IS: possibly delisted; no timezone found
+06:48:29  ERROR     
+1 Failed download:
+06:48:29  ERROR     ['SNKRN.IS']: possibly delisted; no timezone found
+06:48:32  INFO      Batch 12/12 (44 hisse)...
+06:48:34  ERROR     $YGYO.IS: possibly delisted; no timezone found
+06:48:35  ERROR     
+1 Failed download:
+06:48:35  ERROR     ['YGYO.IS']: possibly delisted; no timezone found
+06:48:35  INFO      Veri gelen gün: 0
+06:48:35  INFO      ──────────────────────────────────────────────────
+06:48:35  INFO        Beklenen son işlem günü : 2026-09-18
+06:48:35  INFO        Veri coverage           : 52/594 = %8.8
+06:48:35  INFO        Circuit breaker eşiği   : %95
+06:48:35  INFO        Durum                   : ❌ VERİ EKSİK — strateji GÜNCELLENMEYECEK
+06:48:35  INFO      ──────────────────────────────────────────────────
+06:48:35  INFO      Excel okunuyor...
+06:48:37  INFO      594 hisse hesaplandı.
+06:48:38  INFO      stocks.json: 941 KB
+06:48:38  INFO      detail/ klasörü: 594 dosya
+06:48:38  INFO      Site → docs/index.html
+06:48:38  INFO      Strateji korundu — Cuma değil (bugün: Monday)
+06:48:38  INFO      ==================================================
+06:48:38  INFO        Son veri     : 2026-09-18
+06:48:38  INFO        Toplam hisse : 594
+06:48:38  INFO        Pozitif mom  : 203
+06:48:38  INFO        Negatif FIP  : 441 (kaliteli)
+06:48:38  INFO      ==================================================

@@ -29,7 +29,29 @@ def load_raw_data(excel_path: Path) -> dict:
     ws  = wb['BIST D Return Data']
 
     date_row    = list(ws.iter_rows(min_row=3, max_row=3, values_only=True))[0]
-    idx_to_date = {i: v.date() for i, v in enumerate(date_row) if isinstance(v, datetime.datetime)}
+
+    def _parse_date(v):
+        """Excel'deki tarih hücrelerini güvenli şekilde datetime.date'e çevirir."""
+        if isinstance(v, datetime.datetime):
+            return v.date()
+        if isinstance(v, datetime.date):
+            return v
+        if isinstance(v, str):
+            for fmt in ('%Y-%m-%d', '%d.%m.%Y', '%m/%d/%Y'):
+                try:
+                    return datetime.datetime.strptime(v.strip(), fmt).date()
+                except ValueError:
+                    pass
+        if isinstance(v, (int, float)) and 40000 < v < 60000:
+            # Excel seri numarası → tarih
+            return (datetime.date(1899, 12, 30) + datetime.timedelta(days=int(v)))
+        return None
+
+    idx_to_date = {}
+    for i, v in enumerate(date_row):
+        d = _parse_date(v)
+        if d is not None:
+            idx_to_date[i] = d
 
     # Meta: trade type, industry, name
     meta = {}

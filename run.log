@@ -9414,3 +9414,57 @@
 21:45:58  INFO        Pozitif mom  : 187
 21:45:58  INFO        Negatif FIP  : 453 (kaliteli)
 21:45:58  INFO      ==================================================
+21:22:22  INFO      Excel son veri: 2026-09-25
+21:22:23  INFO      161 gün çekilecek: 2026-02-16 → 2026-09-28
+21:22:23  INFO      Batch 1/12 (50 hisse)...
+21:22:25  ERROR     
+1 Failed download:
+21:22:25  ERROR     ['AKYHO.IS']: OperationalError('database is locked')
+21:22:28  INFO      Batch 2/12 (50 hisse)...
+21:22:33  INFO      Batch 3/12 (50 hisse)...
+21:22:37  INFO      Batch 4/12 (50 hisse)...
+21:22:38  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: DMLKT.IS"}}}
+21:22:38  ERROR     $DMLKT.IS: possibly delisted; no timezone found
+21:22:39  ERROR     
+1 Failed download:
+21:22:39  ERROR     ['DMLKT.IS']: possibly delisted; no timezone found
+21:22:42  INFO      Batch 5/12 (50 hisse)...
+21:22:47  INFO      Batch 6/12 (50 hisse)...
+21:22:52  INFO      Batch 7/12 (50 hisse)...
+21:22:57  INFO      Batch 8/12 (50 hisse)...
+21:23:02  INFO      Batch 9/12 (50 hisse)...
+21:23:07  INFO      Batch 10/12 (50 hisse)...
+21:23:12  INFO      Batch 11/12 (50 hisse)...
+21:23:13  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: SNKRN.IS"}}}
+21:23:13  ERROR     $SNKRN.IS: possibly delisted; no timezone found
+21:23:14  ERROR     
+1 Failed download:
+21:23:14  ERROR     ['SNKRN.IS']: possibly delisted; no timezone found
+21:23:17  INFO      Batch 12/12 (44 hisse)...
+21:23:19  ERROR     $YGYO.IS: possibly delisted; no timezone found
+21:23:20  ERROR     
+1 Failed download:
+21:23:20  ERROR     ['YGYO.IS']: possibly delisted; no timezone found
+21:23:20  INFO      Veri gelen gün: 2
+21:23:20  INFO      Sanity check: Tüm değerler normal aralıkta ✅
+21:23:20  INFO      Backup: Claude_Momentum_Screener_BIST_Labyrinth_backup_20260928_212320.xlsx
+21:23:29  INFO      Yazılan hücre  : 6
+21:23:37  INFO      Excel güncellendi — veri yeniden yükleniyor...
+21:23:38  INFO      ──────────────────────────────────────────────────
+21:23:38  INFO        Beklenen son işlem günü : 2026-09-28
+21:23:38  INFO        Veri coverage           : 3/594 = %0.5
+21:23:38  INFO        Circuit breaker eşiği   : %95
+21:23:38  INFO        Durum                   : ❌ VERİ EKSİK — strateji GÜNCELLENMEYECEK
+21:23:38  INFO      ──────────────────────────────────────────────────
+21:23:38  INFO      Excel okunuyor...
+21:23:40  INFO      594 hisse hesaplandı.
+21:23:41  INFO      stocks.json: 941 KB
+21:23:41  INFO      detail/ klasörü: 594 dosya
+21:23:41  INFO      Site → docs/index.html
+21:23:41  INFO      Strateji korundu — Cuma değil (bugün: Monday)
+21:23:41  INFO      ==================================================
+21:23:41  INFO        Son veri     : 2026-09-28
+21:23:41  INFO        Toplam hisse : 594
+21:23:41  INFO        Pozitif mom  : 187
+21:23:41  INFO        Negatif FIP  : 453 (kaliteli)
+21:23:41  INFO      ==================================================

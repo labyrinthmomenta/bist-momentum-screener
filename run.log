@@ -10282,3 +10282,57 @@
 19:23:42  INFO        Pozitif mom  : 110
 19:23:42  INFO        Negatif FIP  : 507 (kaliteli)
 19:23:42  INFO      ==================================================
+19:01:12  INFO      Excel son veri: 2026-10-15
+19:01:12  INFO      175 gün çekilecek: 2026-02-16 → 2026-10-16
+19:01:12  INFO      Batch 1/12 (50 hisse)...
+19:01:12  INFO      Failed to create TzCache, reason: Error creating TzCache folder: '/home/runner/.cache/py-yfinance' reason: [Errno 17] File exists: '/home/runner/.cache/py-yfinance'. TzCache will not be used. Tip: You can direct cache to use a different location with 'set_tz_cache_location(mylocation)'
+19:01:19  INFO      Batch 2/12 (50 hisse)...
+19:01:25  INFO      Batch 3/12 (50 hisse)...
+19:01:31  INFO      Batch 4/12 (50 hisse)...
+19:01:34  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: DMLKT.IS"}}}
+19:01:34  ERROR     $DMLKT.IS: possibly delisted; no timezone found
+19:01:35  ERROR     
+1 Failed download:
+19:01:35  ERROR     ['DMLKT.IS']: possibly delisted; no timezone found
+19:01:38  INFO      Batch 5/12 (50 hisse)...
+19:01:45  INFO      Batch 6/12 (50 hisse)...
+19:01:51  INFO      Batch 7/12 (50 hisse)...
+19:01:58  INFO      Batch 8/12 (50 hisse)...
+19:02:05  INFO      Batch 9/12 (50 hisse)...
+19:02:13  INFO      Batch 10/12 (50 hisse)...
+19:02:19  INFO      Batch 11/12 (50 hisse)...
+19:02:23  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: SNKRN.IS"}}}
+19:02:24  ERROR     $SNKRN.IS: possibly delisted; no timezone found
+19:02:24  ERROR     
+1 Failed download:
+19:02:24  ERROR     ['SNKRN.IS']: possibly delisted; no timezone found
+19:02:27  INFO      Batch 12/12 (44 hisse)...
+19:02:28  ERROR     $YGYO.IS: possibly delisted; no timezone found
+19:02:29  ERROR     
+1 Failed download:
+19:02:29  ERROR     ['YGYO.IS']: possibly delisted; no timezone found
+19:02:30  INFO      Veri gelen gün: 2
+19:02:30  WARNING     🚫 Quarantine: DUNYH 2026-10-16 ret=-82.6% — HARD_CAP
+19:02:30  WARNING   Sanity check: 1 şüpheli kayıt (1 quarantine)
+19:02:30  WARNING   Sanity check: 1 şüpheli kayıt tespit edildi.
+19:02:30  INFO      Backup: Claude_Momentum_Screener_BIST_Labyrinth_backup_20261016_190230.xlsx
+19:02:36  INFO      Yazılan hücre  : 592
+19:02:42  INFO      Excel güncellendi — veri yeniden yükleniyor...
+19:02:43  INFO      ──────────────────────────────────────────────────
+19:02:43  INFO        Beklenen son işlem günü : 2026-10-16
+19:02:43  INFO        Veri coverage           : 589/594 = %99.2
+19:02:43  INFO        Circuit breaker eşiği   : %95
+19:02:43  INFO        Durum                   : ✅ OK
+19:02:43  INFO      ──────────────────────────────────────────────────
+19:02:43  INFO      Excel okunuyor...
+19:02:45  INFO      594 hisse hesaplandı.
+19:02:46  INFO      stocks.json: 942 KB
+19:02:46  INFO      detail/ klasörü: 594 dosya
+19:02:46  INFO      Site → docs/index.html
+19:02:46  INFO      ✅ Strateji listesi güncellendi (2026-10-16)
+19:02:46  INFO      ==================================================
+19:02:46  INFO        Son veri     : 2026-10-16
+19:02:46  INFO        Toplam hisse : 594
+19:02:46  INFO        Pozitif mom  : 110
+19:02:46  INFO        Negatif FIP  : 507 (kaliteli)
+19:02:46  INFO      ==================================================

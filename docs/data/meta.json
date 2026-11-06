@@ -1,10 +1,1 @@
-{
-  "last_updated": "2026-11-05",
-  "total": 594,
-  "viop": 48,
-  "pos_mom": 65,
-  "neg_mom": 529,
-  "neg_fip": 530,
-  "pos_fip": 64,
-  "generated_at": "2026-11-05T21:34:41.075080Z"
-}
+{"last_updated": "2026-11-06", "total": 594, "viop": 48, "pos_mom": 65, "neg_mom": 529, "neg_fip": 530, "pos_fip": 64, "generated_at": "2026-11-06T21:04:28.142672Z", "circuit_breaker": {"triggered": true, "coverage": 0.0051, "filled": 3, "total": 594, "date": "2026-11-06"}}

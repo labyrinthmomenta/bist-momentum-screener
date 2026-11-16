@@ -11725,3 +11725,61 @@
 23:47:00  INFO        Pozitif mom  : 65
 23:47:00  INFO        Negatif FIP  : 530 (kaliteli)
 23:47:00  INFO      ==================================================
+23:50:09  INFO      Excel son veri: 2026-11-13
+23:50:09  INFO      196 gün çekilecek: 2026-02-16 → 2026-11-16
+23:50:09  INFO      Batch 1/12 (50 hisse)...
+23:50:12  ERROR     
+1 Failed download:
+23:50:12  ERROR     ['ADGYO.IS']: OperationalError('database is locked')
+23:50:15  INFO      Batch 2/12 (50 hisse)...
+23:50:21  INFO      Batch 3/12 (50 hisse)...
+23:50:26  INFO      Batch 4/12 (50 hisse)...
+23:50:29  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: DMLKT.IS"}}}
+23:50:29  ERROR     $DMLKT.IS: possibly delisted; no timezone found
+23:50:29  ERROR     
+1 Failed download:
+23:50:29  ERROR     ['DMLKT.IS']: possibly delisted; no timezone found
+23:50:32  INFO      Batch 5/12 (50 hisse)...
+23:50:38  INFO      Batch 6/12 (50 hisse)...
+23:50:43  INFO      Batch 7/12 (50 hisse)...
+23:50:49  INFO      Batch 8/12 (50 hisse)...
+23:50:52  ERROR     HTTP Error 404: {"quoteSummary":{"result":null,"error":{"code":"Not Found","description":"Quote not found for symbol: MARKA.IS"}}}
+23:50:52  ERROR     $MARKA.IS: possibly delisted; no timezone found
+23:50:52  ERROR     
+1 Failed download:
+23:50:52  ERROR     ['MARKA.IS']: possibly delisted; no timezone found
+23:50:55  INFO      Batch 9/12 (50 hisse)...
+23:51:00  INFO      Batch 10/12 (50 hisse)...
+23:51:06  INFO      Batch 11/12 (50 hisse)...
+23:51:06  ERROR     $SNKRN.IS: possibly delisted; no timezone found
+23:51:08  ERROR     
+1 Failed download:
+23:51:08  ERROR     ['SNKRN.IS']: possibly delisted; no timezone found
+23:51:11  INFO      Batch 12/12 (44 hisse)...
+23:51:14  ERROR     $YGYO.IS: possibly delisted; no timezone found
+23:51:14  ERROR     
+1 Failed download:
+23:51:14  ERROR     ['YGYO.IS']: possibly delisted; no timezone found
+23:51:14  INFO      Veri gelen gün: 2
+23:51:14  INFO      Sanity check: Tüm değerler normal aralıkta ✅
+23:51:14  INFO      Backup: Claude_Momentum_Screener_BIST_Labyrinth_backup_20261116_235114.xlsx
+23:51:20  INFO      Yazılan hücre  : 589
+23:51:24  INFO      Excel güncellendi — veri yeniden yükleniyor...
+23:51:25  INFO      ──────────────────────────────────────────────────
+23:51:25  INFO        Beklenen son işlem günü : 2026-11-16
+23:51:25  INFO        Veri coverage           : 3/594 = %0.5
+23:51:25  INFO        Circuit breaker eşiği   : %95
+23:51:25  INFO        Durum                   : ❌ VERİ EKSİK — strateji GÜNCELLENMEYECEK
+23:51:25  INFO      ──────────────────────────────────────────────────
+23:51:25  INFO      Excel okunuyor...
+23:51:26  INFO      594 hisse hesaplandı.
+23:51:27  INFO      stocks.json: 943 KB
+23:51:27  INFO      detail/ klasörü: 594 dosya
+23:51:27  INFO      Site → docs/index.html
+23:51:27  INFO      Strateji korundu — Cuma değil (bugün: Monday)
+23:51:27  INFO      ==================================================
+23:51:27  INFO        Son veri     : 2026-11-16
+23:51:27  INFO        Toplam hisse : 594
+23:51:27  INFO        Pozitif mom  : 65
+23:51:27  INFO        Negatif FIP  : 530 (kaliteli)
+23:51:27  INFO      ==================================================
